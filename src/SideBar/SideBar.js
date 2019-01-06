@@ -1,31 +1,75 @@
 import React from 'react';
 import { ImageBackground } from 'react-native';
+import firebase from 'firebase';
 import { Container, Content, Text, List, ListItem, Left, Icon, Body } from 'native-base';
 
-const routes = ["Home", "FAQ"];
-const iconArrName = ["home", "md-cloud"];
+class SideBar extends React.Component {
+  state = {
+    currentUser: null,
+    routes: ["Home", "FAQ", "SignIn"],
+    iconName: ["home", "md-cloud", "wifi"],
+    routeName: ["Home", "FAQ", "Sign In"],
+  };
 
-const SideBar = (props) => {
+  componentWillMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      this.setState({ currentUser: user });
+      
+      this.checkLoggedInState();
+   });
 
-  const renderRowItem = (data, secID, rowID) => {
+  }
+
+  checkLoggedInState = () => {
+    const newRoutes = [...this.state.routes];
+    const newIconName = [...this.state.iconName];
+    const newRouteName = [...this.state.routeName];
+
+    if (!this.state.currentUser) {
+      newRoutes[newRoutes.length - 1] = "SignIn";
+      newIconName[newIconName.length - 1] = "wifi";
+      newRouteName[newRouteName.length - 1] = "Sign In";
+    } else {
+      newRoutes[newRoutes.length - 1] = "SignOut";
+      newIconName[newIconName.length - 1] = "bluetooth";
+      newRouteName[newRouteName.length - 1] = "Sign Out";
+    }
+
+    this.setState({ routes: newRoutes, iconName: newIconName, routeName: newRouteName });
+  }
+
+  onRoutePress = (route) => {
+    if (route === "SignOut") {
+      firebase.auth().signOut()
+        .then(() => {
+          this.props.navigation.closeDrawer();
+          this.props.navigation.navigate('Home');
+        });
+    } else {
+      this.props.navigation.navigate(route)
+    }
+  }
+
+  renderRowItem = (data, secID, rowID) => {
     return (
       <ListItem
         icon
         button
-        onPress={() => props.navigation.navigate(data)}
+        onPress={() => this.onRoutePress(data)}
         >
         <Left>
-          <Icon name={iconArrName[rowID]} />
+          <Icon name={this.state.iconName[rowID]} />
         </Left>
         <Body>
-          <Text>{data}</Text>
+          <Text>{this.state.routeName[rowID]}</Text>
         </Body>
       </ListItem>
     );
   }
 
-  return (
-    <Container>
+  render() {
+    return (
+      <Container>
         <Content>
           <ImageBackground
             source={{
@@ -39,12 +83,13 @@ const SideBar = (props) => {
             }}>
           </ImageBackground>
           <List
-            dataArray={routes}
-            renderRow={(data, secID, rowID) => renderRowItem(data, secID, rowID)}
+            dataArray={this.state.routes}
+            renderRow={(data, secID, rowID) => this.renderRowItem(data, secID, rowID)}
           />
         </Content>
       </Container>
   );
+  }
 };
 
 export default SideBar;
