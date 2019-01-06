@@ -1,6 +1,6 @@
 //for testing will use API for data source later
 
-export const movies = [
+export const foodData = [
   {
     title: 'Ramen Burger',
     poster: 'https://c8.alamy.com/comp/HGB7R0/new-fast-food-ramen-burger-close-up-on-a-paper-on-the-wooden-table-HGB7R0.jpg',

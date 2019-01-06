@@ -3,17 +3,10 @@ import { View } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
           Thumbnail, Button, Icon, Title } from 'native-base';
 
-import { movies } from './data';
+import { foodData } from './data';
 import FoodCard from './FoodCard';
 export default class DynamicListExample extends Component {
   render() {
-    var items = [
-      'Simon Mignolet',
-      'Nathaniel Clyne',
-      'Dejan Lovren',
-      'Mama Sakho',
-      'Emre Can'
-    ];
     return (
       <Container>
         <Header>
@@ -28,7 +21,7 @@ export default class DynamicListExample extends Component {
           <Right />
         </Header>
         <Content>
-          <List dataArray={movies}
+          <List dataArray={foodData}
             renderRow={(item) =>
               <ListItem noIndent style={{borderBottomWidth: 0, backgroundColor: "#ddd"}}>
                 <FoodCard
