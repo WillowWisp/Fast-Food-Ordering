@@ -75,3 +75,26 @@ const styles = StyleSheet.create({
 })
 
 export default AppTab;
+
+// const StackNavigator = createStackNavigator(
+//   {
+//     App: AppTabScreen,
+//     FoodMenu: FoodMenuScreen,
+//     FoodDetail: FoodDetailScreen,
+//   },
+//   {
+//     initialRouteName: "App",
+//     headerMode: 'none',
+//     navigationOptions: {
+//         headerVisible: false,
+//     }
+//   }
+// );
+//
+// const AppTabContainer = createAppContainer(StackNavigator);
+//
+// export default class AppTab extends React.Component {
+//   render() {
+//     return <AppTabContainer />;
+//   }
+// }

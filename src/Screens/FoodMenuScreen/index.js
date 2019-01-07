@@ -5,7 +5,26 @@ import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
 
 import { foodData } from './data';
 import FoodCard from './FoodCard';
+import FoodDetail from './FoodDetailScreen/FoodDetailScreen';
+
 export default class DynamicListExample extends Component {
+  // state = {
+  //   popupIsOpen: false,
+  // }
+
+  openFood = (food) => {
+    // this.setState({
+    //   popupIsOpen: true,
+    //   food,
+    // });
+    this.props.navigation.navigate('FoodDetail', {food})
+  }
+
+  closeFood = () => {
+    // this.setState({
+    //   popupIsOpen: false,
+    // });
+  }
   render() {
     return (
       <Container>
@@ -22,14 +41,12 @@ export default class DynamicListExample extends Component {
         </Header>
         <Content>
           <List dataArray={foodData}
-            renderRow={(item) =>
+            renderRow={(food) =>
               <ListItem noIndent style={{borderBottomWidth: 0, backgroundColor: "#ddd"}}>
                 <FoodCard
-                  title={item.title}
-                  poster={item.poster}
-                  price={item.price}
-                  weight={item.weight}>
-                </FoodCard>
+                  food={food}
+                  onOpen={this.openFood}
+                />
               </ListItem>
             }>
           </List>
