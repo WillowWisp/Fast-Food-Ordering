@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    marginLeft: 5,
-    marginRight: 5,
+    marginHorizontal: 10,
+    marginTop: 10,
     height: 200,
   },
   layout: {
