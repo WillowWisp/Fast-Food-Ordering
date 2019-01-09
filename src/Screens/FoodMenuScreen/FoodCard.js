@@ -1,34 +1,46 @@
-import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const FoodCard = (props) => {
-  return (
-    <View style={styles.containerStyle}>
-      <View style={{...styles.imageContainer}}>
-        <Image
-          style={styles.image}
-          source={{uri: props.poster}}
-        />
-        <View style={styles.imageTextContainer}>
-          <View style={styles.priceContainer}>
-            <Text style={styles.priceText}>{props.price}</Text>
+export default class FoodCard extends Component {
+  // static propTypes = {
+  //   // Food object with name, price, poster, ...
+  //   food: PropTypes.object.isRequired,
+  //   // Called when user taps
+  //   onOpen: PropTypes.func.isRequired,
+  // }
+  render() {
+    const { food, food: { title, poster, price, weight }, onOpen } = this.props;
+    return (
+      <TouchableOpacity
+        style={styles.containerStyle}
+        onPress={() => onOpen(food)}
+      >
+        <View style={{...styles.imageContainer}}>
+          <Image
+            style={styles.image}
+            source={{uri: poster}}
+          />
+          <View style={styles.imageTextContainer}>
+            <View style={styles.priceContainer}>
+              <Text style={styles.priceText}>{price}</Text>
+            </View>
+            <Text style={styles.weightText}>{weight}</Text>
           </View>
-          <Text style={styles.weightText}>{props.weight}</Text>
         </View>
-      </View>
-      <View style={{...styles.layout, backgroundColor: "white"}}>
-        <View style={styles.foodTextContainer}>
-          <Text style={styles.foodNameText}>
-            {props.title}
-          </Text>
-          <Text style={styles.infoText}>
-            Qua mon qua mon qua mon qua mon qua mon
-          </Text>
+        <View style={{...styles.layout, backgroundColor: "white"}}>
+          <View style={styles.foodTextContainer}>
+            <Text style={styles.foodNameText}>
+              {title}
+            </Text>
+            <Text style={styles.infoText}>
+              Qua mon qua mon qua mon qua mon qua mon
+            </Text>
+          </View>
         </View>
-      </View>
-    </View>
-  );
-};
+      </TouchableOpacity>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   containerStyle: {
@@ -41,8 +53,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    marginLeft: 5,
-    marginRight: 5,
+    marginHorizontal: 10,
+    marginTop: 10,
     height: 200,
   },
   layout: {
@@ -110,5 +122,3 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
 });
-
-export default FoodCard

@@ -1,16 +1,30 @@
 import React from 'react';
-import { createDrawerNavigator, createAppContainer } from 'react-navigation';
+import { createDrawerNavigator, createAppContainer, createStackNavigator} from 'react-navigation';
 
 import SideBar from './SideBar/SideBar';
 import HomeScreen from './Screens/HomeScreen/';
 import FaqScreen from './Screens/FaqScreen/FaqScreen';
-import FoodMenuScreen from './Screens/FoodMenuScreen/';
 import SignInScreen from './Screens/SignInScreen/';
+import FoodMenuScreen from './Screens/FoodMenuScreen/';
+import FoodDetailScreen from './Screens/FoodMenuScreen/FoodDetailScreen/FoodDetailScreen';
+import CartScreen from './Screens/CartScreen/CartScreen';
 
 const MyDrawerNavigator = createDrawerNavigator({
-  Home:  HomeScreen,
+  Home:  {
+    screen: createStackNavigator({
+      HomeScreen: HomeScreen,
+      FoodMenu: FoodMenuScreen,
+      FoodDetail: FoodDetailScreen,
+      Cart: CartScreen,
+    },
+    {
+      headerMode: 'none',
+      navigationOptions: {
+        headerVisible: false,
+      }
+    }
+  )},
   FAQ:  FaqScreen,
-  FoodMenu: FoodMenuScreen,
   SignIn: SignInScreen,
 }, {
   contentComponent: (props) => <SideBar {...props} />,

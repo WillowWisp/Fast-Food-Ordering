@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, StyleProvider } from 'native-base';
+import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, StyleProvider, Toast } from 'native-base';
 import getTheme from '../../../native-base-theme/components';
 import customizedTheme from '../../../native-base-theme/variables/variables';
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native';
 
 class AppTab extends React.Component {
   constructor() {
@@ -58,6 +58,16 @@ class AppTab extends React.Component {
                 </Button>
               </View>
             </View>
+            <Button onPress={()=> Toast.show({
+              text: '(Test) Total price in cart: ' + user.cart.getTotalPrice(),
+              buttonText: 'Okay',
+              duration: 30000,
+            })}>
+              <Text>Test</Text>
+            </Button>
+            <Button onPress={() => this.props.navigation.navigate('Cart')}>
+              <Text>Cart</Text>
+            </Button>
           </Content>
         </Container>
       </StyleProvider>
@@ -75,3 +85,26 @@ const styles = StyleSheet.create({
 })
 
 export default AppTab;
+
+// const StackNavigator = createStackNavigator(
+//   {
+//     App: AppTabScreen,
+//     FoodMenu: FoodMenuScreen,
+//     FoodDetail: FoodDetailScreen,
+//   },
+//   {
+//     initialRouteName: "App",
+//     headerMode: 'none',
+//     navigationOptions: {
+//         headerVisible: false,
+//     }
+//   }
+// );
+//
+// const AppTabContainer = createAppContainer(StackNavigator);
+//
+// export default class AppTab extends React.Component {
+//   render() {
+//     return <AppTabContainer />;
+//   }
+// }
