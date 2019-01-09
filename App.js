@@ -3,6 +3,7 @@ import { Font, AppLoading } from 'expo';
 import { Root } from 'native-base';
 import firebase from 'firebase';
 import AppContainer from './src/AppContainer';
+import './global';
 
 class App extends React.Component {
   constructor() {

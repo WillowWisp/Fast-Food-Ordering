@@ -7,6 +7,7 @@ import FaqScreen from './Screens/FaqScreen/FaqScreen';
 import SignInScreen from './Screens/SignInScreen/';
 import FoodMenuScreen from './Screens/FoodMenuScreen/';
 import FoodDetailScreen from './Screens/FoodMenuScreen/FoodDetailScreen/FoodDetailScreen';
+import CartScreen from './Screens/CartScreen/CartScreen';
 
 const MyDrawerNavigator = createDrawerNavigator({
   Home:  {
@@ -14,6 +15,7 @@ const MyDrawerNavigator = createDrawerNavigator({
       HomeScreen: HomeScreen,
       FoodMenu: FoodMenuScreen,
       FoodDetail: FoodDetailScreen,
+      Cart: CartScreen,
     },
     {
       headerMode: 'none',

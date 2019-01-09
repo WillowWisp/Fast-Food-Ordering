@@ -10,6 +10,8 @@ import {
   Image,
 } from 'react-native';
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Content, Toast } from 'native-base';
+import Cart from '../../../AppData/Cart';
+import Food from '../../../AppData/Food';
 
 
 export default class FoodDetail extends Component {
@@ -24,7 +26,7 @@ export default class FoodDetail extends Component {
   }
 
   decreaseAmount = () => {
-    if (this.state.amount > 0) {
+    if (this.state.amount > 1) {
       this.setState({amount: this.state.amount - 1});
     }
   }
@@ -42,6 +44,8 @@ export default class FoodDetail extends Component {
   render() {
     const { navigation } = this.props;
     const food = navigation.getParam('food');
+    const foodClass = new Food(food.id, food.title, food.poster, food.price, food.weight, food.type);
+    const cart = new Cart();
 
     return (
       <Container>
@@ -86,20 +90,20 @@ export default class FoodDetail extends Component {
                 <Text style={{fontSize: 20}}>Amount: </Text>
                 <TouchableOpacity
                   style={styles.amountButton}
-                  onPress={this.increaseAmount}
+                  onPress={this.decreaseAmount}
                 >
                   <Icon
-                    name='md-add-circle-outline'
+                    name='md-remove-circle-outline'
                     style={{fontSize: 30, color: 'black'}}
                   />
                 </TouchableOpacity>
                 <Text style={{fontSize: 20}}>{this.state.amount}</Text>
                 <TouchableOpacity
                   style={styles.amountButton}
-                  onPress={this.decreaseAmount}
+                  onPress={this.increaseAmount}
                 >
                   <Icon
-                    name='md-remove-circle-outline'
+                    name='md-add-circle-outline'
                     style={{fontSize: 30, color: 'black'}}
                   />
                 </TouchableOpacity>
@@ -111,12 +115,14 @@ export default class FoodDetail extends Component {
               block
               warning
               style={{borderRadius: 10}}
-              onPress={() =>
+              onPress={() => {
+                user.cart.addFood(foodClass, this.state.amount);
                 Toast.show({
-                  text: "Item(s) added to cart",
+                  text: "Food added to cart",
                   buttonText: "Okay",
-                  type: "success"
-              })}
+                  type: "success",
+                });
+              }}
             >
               <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>Add To Cart</Text>
             </Button>
