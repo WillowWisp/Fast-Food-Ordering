@@ -1,12 +1,13 @@
 import Cart from './Cart'
+import Address from './Address'
 
 export default class User {
   constructor() {
     //Orderlist
     //VoucherList
     //Email
-    //Addresses
     //PaymentMethods
+    this.addressList = [];
     this.cart = new Cart();
   }
 

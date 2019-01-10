@@ -9,7 +9,7 @@ import {
   View,
   Image,
 } from 'react-native';
-import { Container, Header, Left, Body, Right, Button, Icon, Title, Content, Toast } from 'native-base';
+import { Container, Header, Left, Body, Right, Button, Icon, Title, Content, Toast, Badge } from 'native-base';
 import Cart from '../../../AppData/Cart';
 import Food from '../../../AppData/Food';
 
@@ -49,7 +49,7 @@ export default class FoodDetail extends Component {
 
     return (
       <Container>
-        <Header>
+        <Header style={{ height: 70, }}>
           <Left>
             <Button
               transparent
@@ -59,7 +59,14 @@ export default class FoodDetail extends Component {
             </Button>
           </Left>
           <Body/>
-          <Right/>
+          <Right>
+            <TouchableOpacity>
+              <Icon
+                name='md-heart-empty'
+                style={{ color: "white", marginRight: 10, marginTop: 10 }}
+              />
+            </TouchableOpacity>
+          </Right>
         </Header>
         <View style={styles.container}>
           <Image

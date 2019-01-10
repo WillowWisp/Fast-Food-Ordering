@@ -3,8 +3,15 @@ import User from './src/AppData/User'
 global.user = new User();
 global.helper = {
   convertIntToVND: (intNum) => {
+
+    if (intNum === 0) {
+      //console.log(num);
+      return "0 VNĐ";
+    }
+
     var str = " VNĐ";
     var num = intNum;
+
     var count = 0;
     //console.log(num);
     while (num > 0) {
