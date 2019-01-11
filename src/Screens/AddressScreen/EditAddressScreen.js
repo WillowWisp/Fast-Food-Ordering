@@ -27,7 +27,7 @@ export default class EditAddressScreen extends Component {
     //console.log(fullName + " " + phoneNumber + " " + city + " " + detailAddress);
     if (fullName === "" || phoneNumber === "" || city === "" || detailAddress === "") {
       Toast.show({
-        text: 'Please enter all fields',
+        text: 'Vui lòng nhập đầy đủ',
         buttonText: 'Okay',
         type: "danger"
       })
@@ -35,7 +35,7 @@ export default class EditAddressScreen extends Component {
     }
     if (!helper.isNumberString(phoneNumber) || phoneNumber.length < 9) {
       Toast.show({
-        text: 'Phone number is invalid',
+        text: 'Số điện thoại không hợp lệ',
         buttonText: 'Okay',
         type: "danger"
       })
@@ -51,7 +51,7 @@ export default class EditAddressScreen extends Component {
     }
 
     Toast.show({
-      text: 'Address updated!',
+      text: 'Cập nhật địa chỉ thành công!',
       buttonText: 'Okay',
       type: "success",
     })
@@ -87,7 +87,7 @@ export default class EditAddressScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Text style={{color: "white", textAlign: 'center',}}>Update Address</Text>
+            <Text style={{color: "white", textAlign: 'center',}}>Cập nhật địa chỉ</Text>
           </Body>
           <Right/>
         </Header>
@@ -95,7 +95,7 @@ export default class EditAddressScreen extends Component {
           <View style={styles.formContainer}>
             <Form>
               <Item floatingLabel>
-                <Label style={styles.label}>Full name</Label>
+                <Label style={styles.label}>Họ tên</Label>
                 <Input
                   onChangeText={(fullName) => this.setState({fullName})}
                   value={this.state.fullName}
@@ -103,7 +103,7 @@ export default class EditAddressScreen extends Component {
                 />
               </Item>
               <Item floatingLabel>
-                <Label style={styles.label}>Phone number</Label>
+                <Label style={styles.label}>Số điện thoại</Label>
                 <Input
                   keyboardType='numeric'
                   maxLength={10}
@@ -113,7 +113,7 @@ export default class EditAddressScreen extends Component {
                 />
               </Item>
               <Item floatingLabel>
-                <Label style={styles.label}>City</Label>
+                <Label style={styles.label}>Tỉnh/Thành</Label>
                 <Input
                   onChangeText={(city) => this.setState({city})}
                   value={this.state.city}
@@ -121,7 +121,7 @@ export default class EditAddressScreen extends Component {
                 />
               </Item>
               <Item floatingLabel>
-                <Label style={styles.label}>Detail address</Label>
+                <Label style={styles.label}>Địa chỉ</Label>
                 <Input
                   onChangeText={(detailAddress) => this.setState({detailAddress})}
                   value={this.state.detailAddress}
@@ -136,7 +136,7 @@ export default class EditAddressScreen extends Component {
                 ref='_setAsDefaultCheckBox'
                 onPress={() => this.changeSetAsDefaultCheckbox()}
               />
-              <Text style={{ fontSize: 12, marginLeft: 25 }}>Set as default address</Text>
+              <Text style={{ fontSize: 12, marginLeft: 25 }}>Đặt làm địa chỉ mặc định</Text>
             </View>
           </View>
           <Button
@@ -145,7 +145,7 @@ export default class EditAddressScreen extends Component {
             onPress={() => this.updateAddress()}
           >
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>Update address</Text>
+              <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>LƯU ĐỊA CHỈ</Text>
             </View>
           </Button>
         </View>

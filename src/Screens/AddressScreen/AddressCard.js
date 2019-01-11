@@ -16,29 +16,20 @@ export default class AddressCard extends Component {
   }
 
   render() {
-    const { address, id, radioChecked, remove, onTouch, navigation, onAddressChanged } = this.props;
+    const { address, id, remove, navigation, onAddressChanged } = this.props;
     return (
-      <TouchableOpacity
+      <View
         style={styles.cardContainer}
-        onPress={onTouch.bind(this, id)}
       >
         <View style={styles.topContentsContainer}>
-          <View style={styles.nameAndRadioButtonContainer}>
-            <Radio
-              selected={radioChecked}
-              color={ '#bbbbbb' }
-              selectedColor={ '#2372F5' }
-              style={{ marginHorizontal: 5 }}
-            />
-            <Text
-              style={{ marginHorizontal: 5, fontWeight: 'bold', fontSize: 16 }}
-              ref='_addressName'
-            >{address.name}</Text>
-          </View>
+          <Text
+            style={{ fontSize: 16 }}
+            ref='_addressName'
+          >{address.name}</Text>
           <View style={styles.configAndRemoveContainer}>
             <TouchableOpacity
               onPress={() => navigation.navigate('EditAddress',
-                                                  { address, id, defaultChecked: radioChecked, onClose: onAddressChanged }
+                                                  { address, id, defaultChecked: id === user.defaultAddressId, onClose: onAddressChanged }
                                                 )
                       }
             >
@@ -58,10 +49,14 @@ export default class AddressCard extends Component {
           </View>
         </View>
         <View style={styles.phoneNumberAndAddressContainer}>
-          <Text style={{ color: '#888888' }}>{address.phoneNumber}</Text>
           <Text style={{ marginTop: 5, color: '#888888' }}>{address.getFullAddress()}</Text>
+          <Text style={{ color: '#888888' }}>{address.phoneNumber}</Text>
         </View>
-      </TouchableOpacity>
+        { id === user.defaultAddressId ?
+          <Text style={{ marginTop: 5, color: '#2372F5', fontSize: 12 }}>Địa chỉ mặc định</Text>
+          : null
+        }
+      </View>
     );
   }
 }
@@ -69,22 +64,18 @@ export default class AddressCard extends Component {
 const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: "column",
-    padding: 10,
+    padding: 15,
     backgroundColor: "white",
-    marginTop: 1,
   },
   topContentsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  nameAndRadioButtonContainer: {
-    flexDirection: 'row',
-  },
-  phoneNumberAndAddressContainer: {
-    flexDirection: 'column',
-    marginLeft: 35,
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   configAndRemoveContainer: {
     flexDirection: 'row'
-  }
+  },
+  phoneNumberAndAddressContainer: {
+    flexDirection: 'column',
+  },
 });

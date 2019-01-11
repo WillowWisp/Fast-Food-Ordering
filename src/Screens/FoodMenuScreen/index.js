@@ -58,7 +58,7 @@ export default class DynamicListExample extends Component {
             </Button>
           </Left>
           <Body>
-            <Title>Food Menu</Title>
+            <Title>Danh sách món</Title>
           </Body>
           <Right>
             <TouchableOpacity

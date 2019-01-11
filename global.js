@@ -33,5 +33,45 @@ global.helper = {
         return false;
     }
     return true;
-  }
+  },
+
+  getDeliveryMethod: (deliveryMethod) => {
+    console.log(deliveryMethod);
+    switch (deliveryMethod) {
+      case 'standard':
+        console.log('s');
+        return 'Giao hàng tiêu chuẩn';
+        break;
+      case 'fast':
+        console.log('f');
+        return 'Giao hàng nhanh';
+        break;
+      default:
+        console.log('d');
+        return '';
+    }
+  },
+
+  getPaymentMethod: (paymentMethod) => {
+    switch (paymentMethod) {
+      case 'cod':
+        return 'Thanh toán tiền mặt khi nhận hàng';
+        break;
+      default:
+        return '';
+    }
+  },
+
+  getDeliveryCharge: (deliveryMethod) => {
+    switch (deliveryMethod) {
+      case 'standard':
+        return 12000;
+        break;
+      case 'fast':
+        return 22000;
+        break;
+      default:
+        return '';
+    }
+  },
 }

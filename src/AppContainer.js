@@ -14,6 +14,7 @@ import CheckOutPaymentScreen from './Screens/CheckOutScreens/CheckOutPaymentScre
 import CheckOutConfirmationScreen from './Screens/CheckOutScreens/CheckOutConfirmationScreen';
 import NewAddressScreen from './Screens/AddressScreen/NewAddressScreen';
 import EditAddressScreen from './Screens/AddressScreen/EditAddressScreen';
+import AddressListScreen from './Screens/AddressScreen/AddressListScreen'
 
 const MyDrawerNavigator = createDrawerNavigator({
   Home:  {
@@ -21,6 +22,7 @@ const MyDrawerNavigator = createDrawerNavigator({
       HomeScreen: HomeScreen,
       FoodMenu: FoodMenuScreen,
       FoodDetail: FoodDetailScreen,
+      AddressList: AddressListScreen,
       NewAddress: NewAddressScreen,
       EditAddress: EditAddressScreen,
       Cart: CartScreen,

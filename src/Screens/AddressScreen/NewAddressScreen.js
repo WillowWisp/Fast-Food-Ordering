@@ -23,7 +23,7 @@ export default class NewAddressScreen extends Component {
     //console.log(fullName + " " + phoneNumber + " " + city + " " + detailAddress);
     if (fullName === "" || phoneNumber === "" || city === "" || detailAddress === "") {
       Toast.show({
-        text: 'Please enter all fields',
+        text: 'Vui lòng nhập đầy đủ',
         buttonText: 'Okay',
         type: "danger"
       })
@@ -31,7 +31,7 @@ export default class NewAddressScreen extends Component {
     }
     if (!helper.isNumberString(phoneNumber) || phoneNumber.length < 9) {
       Toast.show({
-        text: 'Phone number is invalid',
+        text: 'Số điện thoại không hợp lệ',
         buttonText: 'Okay',
         type: "danger"
       })
@@ -43,7 +43,7 @@ export default class NewAddressScreen extends Component {
       user.changeDefautAddress(user.addressList.length - 1);
     }
     Toast.show({
-      text: 'New address added successfully!',
+      text: 'Thêm địa chỉ thành công!',
       buttonText: 'Okay',
       type: "success",
     })
@@ -66,7 +66,7 @@ export default class NewAddressScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Text style={{color: "white", textAlign: 'center',}}>New Address</Text>
+            <Text style={{color: "white", textAlign: 'center',}}>Thêm địa chỉ mới</Text>
           </Body>
           <Right/>
         </Header>
@@ -74,11 +74,11 @@ export default class NewAddressScreen extends Component {
           <View style={styles.formContainer}>
             <Form>
               <Item floatingLabel>
-                <Label style={styles.label}>Full name</Label>
+                <Label style={styles.label}>Họ tên</Label>
                 <Input getRef={(c) => this._fullName = c} />
               </Item>
               <Item floatingLabel>
-                <Label style={styles.label}>Phone number</Label>
+                <Label style={styles.label}>Số điện thoại</Label>
                 <Input
                   keyboardType='numeric'
                   maxLength={10}
@@ -86,11 +86,11 @@ export default class NewAddressScreen extends Component {
                 />
               </Item>
               <Item floatingLabel>
-                <Label style={styles.label}>City</Label>
+                <Label style={styles.label}>Tỉnh/Thành</Label>
                 <Input getRef={(c) => this._city = c} />
               </Item>
               <Item floatingLabel>
-                <Label style={styles.label}>Detail address</Label>
+                <Label style={styles.label}>Địa chỉ</Label>
                 <Input getRef={(c) => this._detailAddress = c} />
               </Item>
             </Form>
@@ -101,7 +101,7 @@ export default class NewAddressScreen extends Component {
                 ref='_setAsDefaultCheckBox'
                 onPress={() => this.changeSetAsDefaultCheckbox()}
               />
-              <Text style={{ fontSize: 12, marginLeft: 25 }}>Set as default address</Text>
+              <Text style={{ fontSize: 12, marginLeft: 25 }}>Đặt làm địa chỉ mặc định</Text>
             </View>
           </View>
           <Button
@@ -110,7 +110,7 @@ export default class NewAddressScreen extends Component {
             onPress={() => this.addNewAddress()}
           >
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>Add new address</Text>
+              <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>THÊM ĐỊA CHỈ</Text>
             </View>
           </Button>
         </View>

@@ -42,7 +42,7 @@ export default class CheckOutAddressScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Text style={{color: "white", textAlign: 'center',}}>Delivery Address</Text>
+            <Text style={{color: "white", textAlign: 'center',}}>Địa chỉ giao</Text>
           </Body>
           <Right/>
         </Header>
@@ -53,21 +53,21 @@ export default class CheckOutAddressScreen extends Component {
                 name='md-pin'
                 style={styles.doneStep}
               />
-              <Text style={styles.doneStep}>Shipping</Text>
+              <Text style={styles.doneStep}>Địa chỉ</Text>
             </View>
             <View style={styles.step}>
               <Icon
                 name='md-card'
                 style={styles.notDoneStep}
               />
-              <Text style={styles.notDoneStep} >Payment</Text>
+              <Text style={styles.notDoneStep} >Thanh toán</Text>
             </View>
             <View style={styles.step}>
               <Icon
                 name='md-checkmark-circle'
                 style={styles.notDoneStep}
               />
-              <Text style={styles.notDoneStep} >Confirm</Text>
+              <Text style={styles.notDoneStep} >Xác nhận</Text>
             </View>
           </View>
           <ScrollView
@@ -102,7 +102,7 @@ export default class CheckOutAddressScreen extends Component {
               />
               <Text
                 style={{ marginHorizontal: 5, color: '#2372F5', fontSize: 16, fontWeight: 'bold' }}
-              >Add new address</Text>
+              >Thêm địa chỉ mới</Text>
             </TouchableOpacity>
           </ScrollView>
           <Button
@@ -111,7 +111,7 @@ export default class CheckOutAddressScreen extends Component {
             onPress={() => this.props.navigation.navigate('CheckOutPayment')}
           >
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-              <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>Continue</Text>
+              <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>TIẾP TỤC</Text>
             </View>
           </Button>
         </View>
