@@ -6,9 +6,9 @@ import { Container, Content, Text, List, ListItem, Left, Icon, Body } from 'nati
 class SideBar extends React.Component {
   state = {
     currentUser: null,
-    routes: ["Home", "Cart", "FAQ", "SignIn"],
-    iconName: ["home", "md-cart", "md-cloud", "wifi"],
-    routeName: ["Home", "Your Cart", "FAQ", "Sign In"],
+    routes: ["Home", "Cart", "FAQ", "Location", "SignIn"],
+    iconName: ["home", "md-cart", "md-cloud", "home", "wifi"],
+    routeName: ["Home", "Your Cart", "FAQ", "Locate Us", "Sign In"],
   };
 
   componentWillMount() {

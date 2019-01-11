@@ -12,6 +12,7 @@ import CartScreen from './Screens/CartScreen/CartScreen';
 import CheckOutAddressScreen from './Screens/CheckOutScreens/CheckOutAddressScreen';
 import CheckOutPaymentScreen from './Screens/CheckOutScreens/CheckOutPaymentScreen';
 import CheckOutConfirmationScreen from './Screens/CheckOutScreens/CheckOutConfirmationScreen';
+import LocationScreen from './Screens/LocationScreen/LocationScreen';
 
 const MyDrawerNavigator = createDrawerNavigator({
   Home:  {
@@ -65,6 +66,7 @@ const MyDrawerNavigator = createDrawerNavigator({
     }
   )},
   FAQ:  FaqScreen,
+  Location: LocationScreen,
   SignIn: SignInScreen,
 }, {
   contentComponent: (props) => <SideBar {...props} />,
