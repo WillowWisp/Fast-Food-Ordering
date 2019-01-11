@@ -5,6 +5,7 @@ import getTheme from '../../../native-base-theme/components';
 import customizedTheme from '../../../native-base-theme/variables/variables';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
+import Address from '../../AppData/Address'
 
 class AppTab extends React.Component {
   constructor() {
@@ -14,6 +15,16 @@ class AppTab extends React.Component {
       currentUser: null,
       badgeText: user.cart.FoodList.length,
     };
+
+    user.addNewAddress(new Address('Nguyễn Đình Phú Thịnh',
+                                    '0787774666',
+                                    'Hồ Chí Minh',
+                                    'Ký túc xá Khu A ĐHQG Tp.HCM - Khu Phố 6, Phường Linh Trung, Quận Thủ Đức'));
+    user.addNewAddress(new Address('Vladimir Putin',
+                                    '0123456789',
+                                    'Russia',
+                                    'Vodka Cyka Blyat'));
+
   }
 
   componentWillMount() {

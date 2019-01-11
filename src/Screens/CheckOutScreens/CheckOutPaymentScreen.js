@@ -18,7 +18,7 @@ export default class CheckOutPaymentScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Text style={{color: "white", textAlign: 'center',}}>Delivery Address</Text>
+            <Text style={{color: "white", textAlign: 'center',}}>Payment Method</Text>
           </Body>
           <Right/>
         </Header>

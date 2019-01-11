@@ -5,4 +5,8 @@ export default class Address {
     this.city = city;
     this.detailAddress = detailAddress;
   }
+
+  getFullAddress() {
+    return this.detailAddress + ", " + this.city;
+  }
 }

@@ -55,7 +55,6 @@ export default class CartScreen extends Component {
               contentContainerStyle={styles.scrollContent}
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
-              ref='_scrollView'
             >
               {this.state.cart.FoodList.map((cartItem, index) =>
                 <CartItemCard

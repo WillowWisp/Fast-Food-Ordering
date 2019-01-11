@@ -25,6 +25,13 @@ global.helper = {
     if (str.length > 0 && str[0] === ',')
       str = str.slice(1, str.length);
     return str;
-  }
+  },
 
+  isNumberString: (str) => {
+    for (var i = 0; i < str.length; i++) {
+      if (str[i] < '0' || str[i] > '9')
+        return false;
+    }
+    return true;
+  }
 }
