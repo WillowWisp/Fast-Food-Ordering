@@ -13,6 +13,7 @@ import CheckOutAddressScreen from './Screens/CheckOutScreens/CheckOutAddressScre
 import CheckOutPaymentScreen from './Screens/CheckOutScreens/CheckOutPaymentScreen';
 import CheckOutConfirmationScreen from './Screens/CheckOutScreens/CheckOutConfirmationScreen';
 import LocationScreen from './Screens/LocationScreen/LocationScreen';
+import CustomBurgerScreen from './Screens/CustomBurgerScreen/CustomBurgerScreen';
 
 const MyDrawerNavigator = createDrawerNavigator({
   Home:  {
@@ -67,6 +68,7 @@ const MyDrawerNavigator = createDrawerNavigator({
   )},
   FAQ:  FaqScreen,
   Location: LocationScreen,
+  CustomBurger: CustomBurgerScreen,
   SignIn: SignInScreen,
 }, {
   contentComponent: (props) => <SideBar {...props} />,

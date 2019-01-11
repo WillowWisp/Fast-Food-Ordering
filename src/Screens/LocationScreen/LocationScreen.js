@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapView } from 'expo';
-import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, StyleProvider, Toast } from 'native-base';
+import { Container, Header, Title, Button, Left, Right, Body, Icon, StyleProvider } from 'native-base';
 import getTheme from '../../../native-base-theme/components';
 import customizedTheme from '../../../native-base-theme/variables/variables';
 import { View, StyleSheet, ScrollView } from 'react-native';
@@ -113,7 +113,7 @@ export default class LocationScreen extends React.Component {
             
           </View>
         </Container>
-    </StyleProvider>
+      </StyleProvider>
     );
   }
 }
