@@ -3,23 +3,11 @@ import { View, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-nat
 import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
           Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer, FooterTab, Radio, Toast } from 'native-base';
 import Order from '../../AppData/Order';
+import Cart from '../../AppData/Cart';
 
 
 export default class CheckOutConfirmationScreen extends Component {
-  state = {
-    choosenDeliveryMethodId: 0,
-    choosenPaymentMethodId: 0,
-  }
-
-  changeDeliveryMethod(id) {
-    this.setState({ choosenDeliveryMethodId: id });
-  }
-
-  changePaymentMethod(id) {
-    this.setState({ choosenPaymentMethodId: id });
-  }
-
-  createOrder() {
+    createOrder() {
     const address = this.props.navigation.getParam('address');
     const paymentMethod = this.props.navigation.getParam('paymentMethod');
     const deliveryMethod = this.props.navigation.getParam('deliveryMethod');
@@ -27,7 +15,7 @@ export default class CheckOutConfirmationScreen extends Component {
     const id = '1616511'; //temp
     const date = '12/1/2019'; //temp
     const status = 'Đang xử lí';
-    user.addNewOrder(new Order(id, date, status, address, deliveryMethod, paymentMethod, cart));
+    user.addNewOrder(new Order(id, date, status, address, deliveryMethod, paymentMethod, new Cart(cart.FoodList)));
     user.cart.emptyCart();
 
     Toast.show({
@@ -56,7 +44,7 @@ export default class CheckOutConfirmationScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Text style={{color: "white", textAlign: 'center',}}>Thanh toán</Text>
+            <Text style={{color: "white", textAlign: 'center',}}>Xác nhận</Text>
           </Body>
           <Right/>
         </Header>

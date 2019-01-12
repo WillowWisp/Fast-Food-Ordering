@@ -1,8 +1,13 @@
 import Food from './Food';
 
 export default class Cart {
-  constructor() {
-    this.FoodList = [];
+constructor(FoodList) {
+    if (FoodList === undefined) {
+      this.FoodList = [];
+    }
+    else {
+      this.FoodList = Array.from(FoodList);
+    }
   }
 
   addFood(food, amount) {
@@ -57,6 +62,16 @@ export default class Cart {
 
   emptyCart() {
     this.FoodList.length = 0;
+  }
+
+  getShortenedAllFood() {
+    if (this.FoodList.length === 0)
+      return '';
+    var str = this.FoodList[0].food.title;
+    if (this.FoodList.length > 1)
+      str += "...và " + (this.FoodList.length - 1).toString() + " món ăn khác";
+    console.log('this.FoodList[0]');
+    return str;
   }
 
 }
