@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, StyleProvider, Toast, Badge } from 'native-base';
 import getTheme from '../../../native-base-theme/components';
 import customizedTheme from '../../../native-base-theme/variables/variables';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import Address from '../../AppData/Address'
 import Food from '../../AppData/Food'
@@ -92,37 +92,54 @@ class AppTab extends React.Component {
               </TouchableOpacity>
             </Right>
           </Header>
-
-          <Content padder>
-            <View style={[styles.container,
-                          {flexDirection: 'row',
-                          justifyContent: 'flex-start',
-                          alignItems: 'flex-start'}]}>
-              <View style={styles.layout}>
-                <Button onPress={() => this.props.navigation.navigate('FAQ')}>
-                  <Text>Go to FAQ</Text>
-                </Button>
-              </View>
-              <View style={styles.layout}>
-                <Button
-                  onPress={() =>
-                    this.props.navigation.navigate('FoodMenu')}
-                >
-                  <Text>Food Menu</Text>
-                </Button>
-              </View>
-            </View>
-            <Button onPress={()=> Toast.show({
-              text: '(Test) Total price in cart: ' + user.cart.getTotalPrice(),
-              buttonText: 'Okay',
-              duration: 30000,
-            })}>
-              <Text>Test</Text>
-            </Button>
-            <Button onPress={() => this.props.navigation.navigate('Cart')}>
-              <Text>Cart</Text>
-            </Button>
-          </Content>
+          <View style={{ flex: 1, backgroundColor: 'black' }}>
+            <ScrollView
+              contentContainerStyle={styles.scrollContent}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+            >
+              <TouchableOpacity
+                style={styles.categoryCard}
+                onPress={() => this.props.navigation.navigate('FoodMenu', { activeTab: 'burger' })}
+              >
+                <Image
+                  source={require('../../Img/hamburger.jpg')}
+                  style={styles.categoryImage}
+                />
+                <Text style={styles.categoryText}>Hamburger</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.categoryCard}
+                onPress={() => this.props.navigation.navigate('FoodMenu', { activeTab: 'pizza' })}
+              >
+                <Image
+                  source={require('../../Img/pizza.jpg')}
+                  style={styles.categoryImage}
+                />
+                <Text style={styles.categoryText}>Pizza</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.categoryCard}
+                onPress={() => this.props.navigation.navigate('FoodMenu', { activeTab: 'drink' })}
+              >
+                <Image
+                  source={require('../../Img/drink.jpg')}
+                  style={styles.categoryImage}
+                />
+                <Text style={styles.categoryText}>Đồ uống</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.categoryCard}
+                onPress={() => this.props.navigation.navigate('FoodMenu', { activeTab: 'other' })}
+              >
+                <Image
+                  source={require('../../Img/other.jpg')}
+                  style={styles.categoryImage}
+                />
+                <Text style={styles.categoryText}>Món ăn khác</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
         </Container>
       </StyleProvider>
     );
@@ -135,6 +152,29 @@ const styles = StyleSheet.create({
   },
   layout: {
     flex: 1,
+  },
+  scrollContent: {
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+  },
+  categoryCard: {
+    height: 200,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  categoryImage: {
+    flex: 1,
+    alignSelf: 'stretch',
+    width: undefined,
+    height: undefined,
+    opacity: 0.5,
+  },
+  categoryText: {
+    color: 'white',
+    position: 'absolute',
+    fontSize: 30,
+    fontWeight: 'bold'
   }
 })
 
