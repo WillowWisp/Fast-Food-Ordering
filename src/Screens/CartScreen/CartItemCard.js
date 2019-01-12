@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Container, Header, Left, Body, Right, Button, Icon, Title, Content, Toast } from 'native-base';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Container, Header, Left, Body, Right, Button, Icon, Title, Content, Toast, Text } from 'native-base';
+import Modal from 'react-native-modal';
 
 class CCCartItemCard extends Component {
   render() {
@@ -47,10 +48,67 @@ class CCCartItemCard extends Component {
 }
 
 export default class CartItemCard extends Component {
+  state = {
+    isModalVisible: false,
+  }
+
+  _renderInfoButton = () => {
+    const { food } = this.props;
+
+    if (food.ingredients === null) {
+      return;
+    }
+
+    return (
+      <TouchableOpacity
+        style={{flex: 1, alignItems: 'center'}}
+        onPress={() => this.setState({ isModalVisible: true })}
+      >
+        <Icon name='md-information-circle' />
+      </TouchableOpacity>
+    );
+  }
+
+  _renderModal = () => {
+    return (
+      <Modal isVisible={this.state.isModalVisible} onBackdropPress={() => this.setState({isModalVisible: false})}>
+          <View style={styles.modalStyle}>
+            <View style={{flex: 1, justifyContent: 'center', borderBottomWidth: 1, borderBottomColor: '#ddd'}}>
+              <Text style={{fontSize: 22, fontWeight: '700'}}>Danh sách thành phần</Text>
+            </View>
+            <View style={{flex: 2, justifyContent: 'center'}}>
+              {this._renderIngredients()}
+            </View>
+            <View style={{flex: 1}}> 
+              <Button danger onPress={() => this.setState({isModalVisible: false})}>
+                <Text style={{fontSize: 18, fontWeight: '600', color: 'white'}}>ĐÓNG</Text>
+              </Button>
+            </View>
+          </View>
+        </Modal>
+    );
+  }
+
+  _renderIngredients = () => {
+    const { food } = this.props;
+
+    if (food.ingredients === null) {
+      return;
+    }
+
+    return (
+      Object.keys(food.ingredients).map(ingredientName => {
+        const capitalizedName = ingredientName.charAt(0).toUpperCase() + ingredientName.slice(1);
+        return (<Text style={{color: '#555', fontWeight: '500'}}>- {capitalizedName}: {food.ingredients[ingredientName]}</Text>);
+      })
+    );
+  }
+
   render() {
     const { food, amount, removeItem, increaseAmount, decreaseAmount } = this.props;
     return (
       <View style={styles.cardContainer}>
+        {this._renderModal()}
         <View style={styles.foodInfoContainer}>
           <Image
             style={styles.image}
@@ -72,7 +130,7 @@ export default class CartItemCard extends Component {
         </View>
         <View style={styles.line}/>
         <View style={styles.optionContainer}>
-          <View style={{flexDirection: "row", marginHorizontal: 10, }}>
+          <View style={{flex: 1, alignItems: 'flex-start', flexDirection: "row", marginHorizontal: 10, }}>
             <TouchableOpacity
               style={styles.amountButton}
               onPress={() => decreaseAmount(food.id)}
@@ -93,7 +151,9 @@ export default class CartItemCard extends Component {
               />
             </TouchableOpacity>
           </View>
+          {this._renderInfoButton()}
           <TouchableOpacity
+            style={{flex: 1, alignItems: 'flex-end'}}
             onPress={() => removeItem(food.id)}
           >
             <Icon
@@ -108,6 +168,23 @@ export default class CartItemCard extends Component {
 }
 
 const styles = StyleSheet.create({
+  modalStyle: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 3,
+  },
+  modalCloseButton: {
+    width: 90,
+    height: 50,
+    backgroundColor: '#ff9c2b',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+  },
   containerStyle: {
     backgroundColor: "white",
     marginBottom: 5,

@@ -4,6 +4,7 @@ import { Container, Header, Title, Button, Left, Right, Body, Icon, Text, StyleP
 import getTheme from '../../../native-base-theme/components';
 import customizedTheme from '../../../native-base-theme/variables/variables';
 import firebase from 'firebase';
+import Food from '../../AppData/Food';
 
 const INGREDIENT_DISPLAY_NAMES = {
   cucumber: 'Dưa leo',
@@ -13,6 +14,7 @@ const INGREDIENT_DISPLAY_NAMES = {
   steak: 'Thịt bò',
 }
 
+let currentID = 999;
 
 export default class CustomBurgerScreen extends React.Component {
   constructor() {
@@ -28,13 +30,17 @@ export default class CustomBurgerScreen extends React.Component {
       },
       ingredient_prices: {},
       totalPrice: 0,
+      isReady: false,
     }
   }
 
   componentWillMount() {
     firebase.database().ref('ingredient_prices')
       .on('value', (snapshot) => {
-        this.setState({ ingredient_prices: snapshot.val() }, () => this.updateTotalPrice());
+        this.setState({ ingredient_prices: snapshot.val() }, () => {
+          this.updateTotalPrice();
+          this.setState({ isReady: true });
+        });
       });
   }
 
@@ -78,8 +84,6 @@ export default class CustomBurgerScreen extends React.Component {
 
   _renderOptions = () => {
     const options = Object.keys(this.state.ingredients).map(ingredientName => {
-      const capitalizedName = ingredientName.charAt(0).toUpperCase() + ingredientName.slice(1);
-
       return (
         <View style={{flexDirection: 'row', justifyContent: 'space-around', borderBottomWidth: 1, borderBottomColor: '#bbb'}}>
           <View style={{flex: 1, justifyContent: 'center'}}>
@@ -196,6 +200,12 @@ export default class CustomBurgerScreen extends React.Component {
     return returnValue;
   }
 
+  onAddPress = () => {
+    const newFood = new Food(currentID, 'Custom Hamburger', 'https://i.imgur.com/XRexh1R.png', helper.convertIntToVND(this.state.totalPrice), 0, 'custom', this.state.ingredients);
+    user.cart.addFood(newFood, 1);
+    currentID++;
+  }
+
   render() {
     console.disableYellowBox = true;
 
@@ -238,7 +248,8 @@ export default class CustomBurgerScreen extends React.Component {
                   </Text>
                 </View>
                 <View style={{flex: 1}}>
-                  <Button small success rounded onPress={() => {
+                  <Button disabled={!this.state.isReady} light={!this.state.isReady} small success rounded onPress={() => {
+                    this.onAddPress();
                     Toast.show({
                       text: "Đã thêm Burger vào giỏ hàng.",
                       buttonText: "Okay",
