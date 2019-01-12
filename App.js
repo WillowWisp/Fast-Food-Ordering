@@ -31,6 +31,8 @@ class App extends React.Component {
   }
 
   render() {
+    console.disableYellowBox = true;
+
     if (!this.state.isReady) {
       return <AppLoading />
     }

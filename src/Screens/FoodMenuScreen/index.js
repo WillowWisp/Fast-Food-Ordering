@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
           Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer, FooterTab, Badge } from 'native-base';
-
-import { foodData } from './data';
+import firebase from 'firebase';
 import FoodCard from './FoodCard';
 import FoodDetail from './FoodDetailScreen/FoodDetailScreen';
 import { NavigationEvents } from 'react-navigation';
@@ -12,6 +11,14 @@ export default class DynamicListExample extends Component {
   state = {
     activeTab: 'burger',
     badgeText: user.cart.FoodList.length,
+    foodData: [],
+  }
+
+  componentWillMount() {
+    firebase.database().ref('foodMenu/foodData')
+      .on('value', snapshot => {
+        this.setState({ foodData: snapshot.val() });
+      })
   }
 
   openFood = (food) => {
@@ -87,7 +94,7 @@ export default class DynamicListExample extends Component {
             showsVerticalScrollIndicator={false}
             ref='_scrollView'
           >
-            {foodData.map((food) => food.type === this.state.activeTab ?
+            {this.state.foodData.map((food) => food.type === this.state.activeTab ?
               <FoodCard
                 food={food}
                 onOpen={this.openFood}
