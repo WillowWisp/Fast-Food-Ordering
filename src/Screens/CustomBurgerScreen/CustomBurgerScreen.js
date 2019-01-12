@@ -12,6 +12,14 @@ const INGREDIENT_PRICES = {
   steak: 15000,
 };
 
+const INGREDIENT_DISPLAY_NAMES = {
+  cucumber: 'Dưa leo',
+  tomato: 'Cà chua',
+  salad: 'Salad',
+  cheese: 'Phô mai',
+  steak: 'Thịt bò',
+}
+
 
 export default class CustomBurgerScreen extends React.Component {
   constructor() {
@@ -79,7 +87,7 @@ export default class CustomBurgerScreen extends React.Component {
         <View style={{flexDirection: 'row', justifyContent: 'space-around', borderBottomWidth: 1, borderBottomColor: '#bbb'}}>
           <View style={{flex: 1, justifyContent: 'center'}}>
             <Text style={{fontWeight: '600', color: '#444'}}>
-              {capitalizedName}
+              {INGREDIENT_DISPLAY_NAMES[ingredientName]}
             </Text>
           </View>
           <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
@@ -204,7 +212,7 @@ export default class CustomBurgerScreen extends React.Component {
               </Button>
             </Left>
             <Body>
-              <Title>Custom Burger</Title>
+              <Title>Tùy chỉnh Burger</Title>
             </Body>
             <Right />
           </Header>
@@ -226,7 +234,7 @@ export default class CustomBurgerScreen extends React.Component {
               <View style={{flex: 1, borderTopWidth: 1, borderTopColor: '#aaa', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                 <View style={{flex: 2}}>
                   <Text>
-                    <Text style={{fontWeight: '500', fontSize: 14}}>Total Price: </Text>
+                    <Text style={{fontWeight: '500', fontSize: 14}}>Thành Tiền: </Text>
                     <Text style={{color: '#ce6300' ,fontWeight: '600', textDecorationLine: 'underline'}}>
                       {helper.convertIntToVND(this.state.totalPrice)}
                     </Text>
@@ -235,13 +243,13 @@ export default class CustomBurgerScreen extends React.Component {
                 <View style={{flex: 1}}>
                   <Button small success rounded onPress={() => {
                     Toast.show({
-                      text: "Burger added to cart.",
+                      text: "Đã thêm Burger vào giỏ hàng.",
                       buttonText: "Okay",
                       type: "success",
                     });
                   }}>
                     <Icon name='md-cart' />
-                    <Text>Add</Text>
+                    <Text>Thêm</Text>
                   </Button>
                 </View>
               </View>

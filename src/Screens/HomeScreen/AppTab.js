@@ -70,7 +70,7 @@ class AppTab extends React.Component {
               </Button>
             </Left>
             <Body>
-              <Title>Burger King</Title>
+              <Title>Trang chủ</Title>
             </Body>
             <Right>
               <TouchableOpacity

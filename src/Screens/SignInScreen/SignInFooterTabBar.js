@@ -13,7 +13,7 @@ const SignInFooterTabBar = (props) => {
             onPress={() => props.navigation.navigate('SignIn')}
             active={props.navigation.state.index === 0}
           >
-            <Icon name="apps" />
+            <Icon name="users" type='FontAwesome' />
             <Text>Sign In</Text>
           </Button>
           <Button
@@ -21,7 +21,7 @@ const SignInFooterTabBar = (props) => {
             onPress={() => props.navigation.navigate('SignUp')}
             active={props.navigation.state.index === 1}
           >
-            <Icon name="compass" />
+            <Icon name="user-plus" type='FontAwesome' />
             <Text>Sign Up</Text>
           </Button>
         </FooterTab>

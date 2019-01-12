@@ -92,7 +92,7 @@ export default class LocationScreen extends React.Component {
               </Button>
             </Left>
             <Body>
-              <Title>Locate Us</Title>
+              <Title>Cửa hàng</Title>
             </Body>
             <Right />
           </Header>
