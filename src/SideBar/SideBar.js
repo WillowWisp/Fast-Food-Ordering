@@ -14,16 +14,16 @@ class SideBar extends React.Component {
         displayName: "Trang chủ"
       },
       {
-        name: "OrderHistory",
-        iconName: "md-album",
-        iconType: "Ionicons",
-        displayName: "Quản lí đơn hàng"
-      },
-      {
         name: "Cart",
         iconName: "md-cart",
         iconType: "Ionicons",
         displayName: "Giỏ hàng"
+      },
+      {
+        name: "OrderHistory",
+        iconName: "md-albums",
+        iconType: "Ionicons",
+        displayName: "Quản lí đơn hàng"
       },
       {
         name: "AddressList",
