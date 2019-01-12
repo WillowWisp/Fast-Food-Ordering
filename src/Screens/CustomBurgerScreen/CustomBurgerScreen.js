@@ -4,6 +4,15 @@ import { Container, Header, Title, Button, Left, Right, Body, Icon, Text, StyleP
 import getTheme from '../../../native-base-theme/components';
 import customizedTheme from '../../../native-base-theme/variables/variables';
 
+const INGREDIENT_PRICES = {
+  cucumber: 4000,
+  tomato: 4500,
+  salad: 5000,
+  cheese: 8000,
+  steak: 15000,
+};
+
+
 export default class CustomBurgerScreen extends React.Component {
   constructor() {
     super();
@@ -15,8 +24,23 @@ export default class CustomBurgerScreen extends React.Component {
         salad: 1,
         cheese: 1,
         steak: 1,
-      }
+      },
+      totalPrice: 0,
     }
+  }
+
+  componentWillMount() {
+    this.updateTotalPrice();
+  }
+
+  updateTotalPrice = () => {
+    let updatedTotalPrice = 0;
+
+    Object.keys(this.state.ingredients).forEach((ingredientName) => {
+      updatedTotalPrice += INGREDIENT_PRICES[ingredientName] * this.state.ingredients[ingredientName];
+    });
+
+    this.setState({ totalPrice: updatedTotalPrice });
   }
 
   getTotalIngredients = () => {
@@ -32,7 +56,7 @@ export default class CustomBurgerScreen extends React.Component {
     const updatedIngredients = {...this.state.ingredients};
     amount++;
     updatedIngredients[ingredientName] = amount;
-    this.setState({ ingredients: updatedIngredients });
+    this.setState({ ingredients: updatedIngredients }, () => this.updateTotalPrice());
   }
 
   decreaseIngredient = (ingredientName) => {
@@ -44,7 +68,7 @@ export default class CustomBurgerScreen extends React.Component {
     const updatedIngredients = {...this.state.ingredients};
     amount--;
     updatedIngredients[ingredientName] = amount;
-    this.setState({ ingredients: updatedIngredients });
+    this.setState({ ingredients: updatedIngredients }, () => this.updateTotalPrice());
   }
 
   _renderOptions = () => {
@@ -53,9 +77,14 @@ export default class CustomBurgerScreen extends React.Component {
 
       return (
         <View style={{flexDirection: 'row', justifyContent: 'space-around', borderBottomWidth: 1, borderBottomColor: '#bbb'}}>
-          <View style={{flex: 3}}>
+          <View style={{flex: 1, justifyContent: 'center'}}>
             <Text style={{fontWeight: '600', color: '#444'}}>
               {capitalizedName}
+            </Text>
+          </View>
+          <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
+            <Text style={{color: '#ce6300', fontWeight: '500', fontSize: 14}}>
+              {helper.convertIntToVND(INGREDIENT_PRICES[ingredientName])}
             </Text>
           </View>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
@@ -181,10 +210,10 @@ export default class CustomBurgerScreen extends React.Component {
           </Header>
 
           <View style={{flex: 1, flexDirection: 'column'}}>
-            <View style={{flex: 1, justifyContent: 'space-evenly', paddingHorizontal: 10, backgroundColor: '#eee', elevation: 2}}>
+            <View style={{flex: 4, justifyContent: 'space-between', paddingHorizontal: 10, backgroundColor: '#eee', elevation: 2}}>
               {this._renderOptions()}
             </View>
-            <View style={{flex: 2, alignItems: 'center'}}>
+            <View style={{flex: 7, alignItems: 'center'}}>
               {this._renderBun('topBun')}
               {this._renderIngredient('cucumber')}
               {this._renderIngredient('tomato')}
@@ -192,6 +221,30 @@ export default class CustomBurgerScreen extends React.Component {
               {this._renderIngredient('cheese')}
               {this._renderIngredient('steak')}
               {this._renderBun('botBun')}
+            </View>
+            <View style={{flex: 1, backgroundColor: '#ccc', paddingHorizontal: 15}}>
+              <View style={{flex: 1, borderTopWidth: 1, borderTopColor: '#aaa', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+                <View style={{flex: 2}}>
+                  <Text>
+                    <Text style={{fontWeight: '500', fontSize: 14}}>Total Price: </Text>
+                    <Text style={{color: '#ce6300' ,fontWeight: '600', textDecorationLine: 'underline'}}>
+                      {helper.convertIntToVND(this.state.totalPrice)}
+                    </Text>
+                  </Text>
+                </View>
+                <View style={{flex: 1}}>
+                  <Button small success rounded onPress={() => {
+                    Toast.show({
+                      text: "Burger added to cart.",
+                      buttonText: "Okay",
+                      type: "success",
+                    });
+                  }}>
+                    <Icon name='md-cart' />
+                    <Text>Add</Text>
+                  </Button>
+                </View>
+              </View>
             </View>
           </View>
         </Container>
