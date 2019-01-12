@@ -4,6 +4,7 @@ import { createDrawerNavigator, createAppContainer, createStackNavigator} from '
 
 import SideBar from './SideBar/SideBar';
 import HomeScreen from './Screens/HomeScreen/';
+import AppTab from './Screens/HomeScreen/AppTab';
 import FaqScreen from './Screens/FaqScreen/FaqScreen';
 import SignInScreen from './Screens/SignInScreen/';
 import FoodMenuScreen from './Screens/FoodMenuScreen/';
@@ -23,7 +24,7 @@ import OrderDetailScreen from './Screens/OrderHistoryScreen/OrderDetailScreen';
 const MyDrawerNavigator = createDrawerNavigator({
   Home:  {
     screen: createStackNavigator({
-      HomeScreen: HomeScreen,
+      HomeScreen: AppTab,
       FoodMenu: FoodMenuScreen,
       FoodDetail: FoodDetailScreen,
       AddressList: AddressListScreen,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
           Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer,
           FooterTab, Badge, InputGroup, Input } from 'native-base';
@@ -56,6 +56,12 @@ export default class DynamicListExample extends Component {
     if (input === "" || input === undefined)
       return;
     this.setState({ isSearching: true, searchResult: input });
+  }
+
+  componentWillMount() {
+    const activeTab = this.props.navigation.getParam('activeTab');
+    this.setState({activeTab});
+    console.log('a');
   }
 
   render() {
@@ -136,25 +142,53 @@ export default class DynamicListExample extends Component {
                   onPress={this.changeActiveTab.bind(this, 'burger')}
                   style={{backgroundColor: this.state.activeTab === 'burger' ? "#CD8800" : "#FFAA00"}}
                 >
-                  <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Burger Icon</Text>
+                  <Image
+                    source={require('../../Img/icon-burger.png')}
+                    style={styles.icon}
+                  />
+                  <Text
+                    uppercase={false}
+                    style={{fontSize: 11, color: "white"}}
+                  >Hamburger</Text>
                 </Button>
                 <Button
                   onPress={this.changeActiveTab.bind(this, 'pizza')}
                   style={{backgroundColor: this.state.activeTab === 'pizza' ? "#CD8800" : "#FFAA00"}}
                 >
-                  <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Pizza Icon</Text>
+                  <Image
+                    source={require('../../Img/icon-pizza.png')}
+                    style={styles.icon}
+                  />
+                  <Text
+                    uppercase={false}
+                    style={{fontSize: 11, color: "white"}}
+                  >Pizza</Text>
                 </Button>
                 <Button
                   onPress={this.changeActiveTab.bind(this, 'drink')}
                   style={{backgroundColor: this.state.activeTab === 'drink' ? "#CD8800" : "#FFAA00"}}
                 >
-                  <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Drink Icon</Text>
+                  <Image
+                    source={require('../../Img/icon-coke.png')}
+                    style={styles.icon}
+                  />
+                  <Text
+                    uppercase={false}
+                    style={{fontSize: 11, color: "white"}}
+                  >Đồ uống</Text>
                 </Button>
                 <Button
                   onPress={this.changeActiveTab.bind(this, 'other')}
                   style={{backgroundColor: this.state.activeTab === 'other' ? "#CD8800" : "#FFAA00"}}
                 >
-                  <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Other Icon</Text>
+                  <Image
+                    source={require('../../Img/icon-hotdog.png')}
+                    style={styles.icon}
+                  />
+                  <Text
+                    uppercase={false}
+                    style={{fontSize: 11, color: "white"}}
+                  >Khác</Text>
                 </Button>
               </FooterTab>
             </Footer>
@@ -175,4 +209,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',   // arrange posters in rows
     flexWrap: 'wrap',       // allow multiple rows
   },
+  icon: {
+    width: 28,
+    height: 28,
+  }
 });
