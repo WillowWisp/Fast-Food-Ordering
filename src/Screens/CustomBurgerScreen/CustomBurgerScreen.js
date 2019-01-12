@@ -3,14 +3,7 @@ import { View, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-nat
 import { Container, Header, Title, Button, Left, Right, Body, Icon, Text, StyleProvider, Toast } from 'native-base';
 import getTheme from '../../../native-base-theme/components';
 import customizedTheme from '../../../native-base-theme/variables/variables';
-
-const INGREDIENT_PRICES = {
-  cucumber: 4000,
-  tomato: 4500,
-  salad: 5000,
-  cheese: 8000,
-  steak: 15000,
-};
+import firebase from 'firebase';
 
 const INGREDIENT_DISPLAY_NAMES = {
   cucumber: 'Dưa leo',
@@ -33,19 +26,23 @@ export default class CustomBurgerScreen extends React.Component {
         cheese: 1,
         steak: 1,
       },
+      ingredient_prices: {},
       totalPrice: 0,
     }
   }
 
   componentWillMount() {
-    this.updateTotalPrice();
+    firebase.database().ref('ingredient_prices')
+      .on('value', (snapshot) => {
+        this.setState({ ingredient_prices: snapshot.val() }, () => this.updateTotalPrice());
+      });
   }
 
   updateTotalPrice = () => {
     let updatedTotalPrice = 0;
 
     Object.keys(this.state.ingredients).forEach((ingredientName) => {
-      updatedTotalPrice += INGREDIENT_PRICES[ingredientName] * this.state.ingredients[ingredientName];
+      updatedTotalPrice += this.state.ingredient_prices[ingredientName] * this.state.ingredients[ingredientName];
     });
 
     this.setState({ totalPrice: updatedTotalPrice });
@@ -92,7 +89,7 @@ export default class CustomBurgerScreen extends React.Component {
           </View>
           <View style={{flex: 1, alignItems: 'flex-end', justifyContent: 'center'}}>
             <Text style={{color: '#ce6300', fontWeight: '500', fontSize: 14}}>
-              {helper.convertIntToVND(INGREDIENT_PRICES[ingredientName])}
+              {helper.convertIntToVND(this.state.ingredient_prices[ingredientName])}
             </Text>
           </View>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>

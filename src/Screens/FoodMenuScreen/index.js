@@ -3,8 +3,7 @@ import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
           Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer,
           FooterTab, Badge, InputGroup, Input } from 'native-base';
-
-import { foodData } from './data';
+import firebase from 'firebase';
 import FoodCard from './FoodCard';
 import FoodDetail from './FoodDetailScreen/FoodDetailScreen';
 import { NavigationEvents } from 'react-navigation';
@@ -13,6 +12,14 @@ export default class DynamicListExample extends Component {
   state = {
     activeTab: 'burger',
     badgeText: user.cart.FoodList.length,
+    foodData: [],
+  }
+
+  componentWillMount() {
+    firebase.database().ref('foodMenu/foodData')
+      .on('value', snapshot => {
+        this.setState({ foodData: snapshot.val() });
+      })
     isSearching: false,
     searchInput: '',
     searchResult: '',
@@ -114,7 +121,7 @@ export default class DynamicListExample extends Component {
             showsVerticalScrollIndicator={false}
             ref='_scrollView'
           >
-            {foodData.map((food) =>
+            {this.state.foodData.map((food) =>
               ((!this.state.isSearching && food.type === this.state.activeTab)
                 || (this.state.isSearching && food.title.toLowerCase().includes(this.state.searchResult.toLowerCase()))) ?
               <FoodCard

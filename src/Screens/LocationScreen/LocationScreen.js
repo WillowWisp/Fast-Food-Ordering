@@ -4,38 +4,41 @@ import { Container, Header, Title, Button, Left, Right, Body, Icon, StyleProvide
 import getTheme from '../../../native-base-theme/components';
 import customizedTheme from '../../../native-base-theme/variables/variables';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import firebase from 'firebase';
 
 import LocationCard from './LocationCard';
 
-const places = [
-  {
-    id: 1,
-    lat: 10.8151266,
-    long: 106.7094782,
-    title: "Hamburger Nguyễn Xí",
-    address: "21 Nguyễn Xí, P.26, Q.Bình Thạnh",
-    open: "08:00",
-    close: "22:00"
-  },
-  {
-    id: 2,
-    lat: 10.7974772,
-    long: 106.6884725,
-    title: "Hamburger Phan Xích Long",
-    address: "1C5 Phan Xích Long, P.7, Q.Phú Nhuận",
-    open: "07:30",
-    close: "23:30"
-  },
-  {
-    id: 3,
-    lat: 10.8498999,
-    long: 106.7658424,
-    title: "Hamburger Thủ Đức",
-    address: "283 Võ Văn Ngân, P.Linh Chiểu, Q.Thủ Đức",
-    open: "09:00",
-    close: "20:00"
-  },
-];
+// const places = [
+//   {
+//     id: 1,
+//     lat: 10.8151266,
+//     long: 106.7094782,
+//     title: "Hamburger Nguyễn Xí",
+//     address: "21 Nguyễn Xí, P.26, Q.Bình Thạnh",
+//     open: "08:00",
+//     close: "22:00"
+//   },
+//   {
+//     id: 2,
+//     lat: 10.7974772,
+//     long: 106.6884725,
+//     title: "Hamburger Phan Xích Long",
+//     address: "1C5 Phan Xích Long, P.7, Q.Phú Nhuận",
+//     open: "07:30",
+//     close: "23:30"
+//   },
+//   {
+//     id: 3,
+//     lat: 10.8498999,
+//     long: 106.7658424,
+//     title: "Hamburger Thủ Đức",
+//     address: "283 Võ Văn Ngân, P.Linh Chiểu, Q.Thủ Đức",
+//     open: "09:00",
+//     close: "20:00"
+//   },
+// ];
+
+//let places = [];
 
 export default class LocationScreen extends React.Component {
   state = {
@@ -44,11 +47,20 @@ export default class LocationScreen extends React.Component {
       longitude: 106.628556,
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
-    }
+    },
+    places: [],
+  }
+
+  componentWillMount() {
+    firebase.database().ref('places/')
+      .on('value', (snapshot) => {
+        const fetchedPlaces = snapshot.val();
+        this.setState({ places: fetchedPlaces });
+      });
   }
 
   _renderMarker = () => {
-    return places.map(place => (
+    return this.state.places.map(place => (
       <MapView.Marker
         coordinate={{latitude: place.lat, longitude: place.long}}
         title={place.title}
@@ -59,7 +71,7 @@ export default class LocationScreen extends React.Component {
   }
 
   _renderLocationCards = () => {
-    return places.map(place => (
+    return this.state.places.map(place => (
       <LocationCard
         place={place}
         key={place.id}
@@ -82,6 +94,8 @@ export default class LocationScreen extends React.Component {
   }
 
   render() {
+    console.disableYellowBox = true;
+
     return (
       <StyleProvider style={getTheme(customizedTheme)}>
         <Container>
