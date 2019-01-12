@@ -73,7 +73,7 @@ class SignUpTab extends Component {
             </Item>
           </Form>
           <Button success style={{marginTop: 50}} block onPress={this.onSignUpPress}>
-            <Text>Sign Up</Text>
+            <Text>Đăng ký</Text>
           </Button>
         </Content>
       </Container>

@@ -58,7 +58,7 @@ class SignInScreen extends Component {
             </Item>
           </Form>
           <Button success style={{marginTop: 50}} block onPress={this.onSignInPress}>
-            <Text>Sign In</Text>
+            <Text>Đăng nhập</Text>
           </Button>
         </Content>
       </Container>
