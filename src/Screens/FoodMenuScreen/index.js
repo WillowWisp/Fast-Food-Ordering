@@ -68,7 +68,11 @@ export default class DynamicListExample extends Component {
   componentWillMount() {
     const activeTab = this.props.navigation.getParam('activeTab');
     this.setState({activeTab});
-    console.log('a');
+    
+    firebase.database().ref('foodMenu/foodData')
+      .on('value', snapshot => {
+        this.setState({ foodData: snapshot.val() });
+      });
   }
 
   render() {
