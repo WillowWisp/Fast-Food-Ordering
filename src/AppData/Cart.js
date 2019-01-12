@@ -55,4 +55,8 @@ export default class Cart {
     return totalPrice;
   }
 
+  emptyCart() {
+    this.FoodList.length = 0;
+  }
+
 }

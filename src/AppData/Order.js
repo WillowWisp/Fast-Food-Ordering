@@ -5,6 +5,7 @@ export default class Order {
   constructor(id, date, status, address, deliveryMethod, paymentMethod, cart) {
     this.id = id;
     this.date = date;
+    this.status =status;
     this.address = address;
     this.deliveryMethod = deliveryMethod;
     this.paymentMethod = paymentMethod;

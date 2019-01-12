@@ -6,6 +6,7 @@ import customizedTheme from '../../../native-base-theme/variables/variables';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import Address from '../../AppData/Address'
+import Food from '../../AppData/Food'
 
 class AppTab extends React.Component {
   constructor() {
@@ -24,6 +25,13 @@ class AppTab extends React.Component {
                                     '0123456789',
                                     'Russia',
                                     'Vodka Cyka Blyat'));
+    user.cart.addFood(new Food(0, 'Ramen Burger',
+                              'https://c8.alamy.com/comp/HGB7R0/new-fast-food-ramen-burger-close-up-on-a-paper-on-the-wooden-table-HGB7R0.jpg',
+                              '50.000 VNĐ', '420g', 'burger'), 2);
+    user.cart.addFood(new Food(1, 'Rustic Sandwich',
+                              'https://c8.alamy.com/comp/HFHJHT/rustic-sandwich-with-beefsteak-fried-egg-and-french-fries-vertical-HFHJHT.jpg',
+                              '40.000 VNĐ', '420g', 'other'), 1);
+
 
   }
 

@@ -3,10 +3,10 @@ import Address from './Address'
 
 export default class User {
   constructor() {
-    //Orderlist
-    //VoucherList
-    //Email
-    //PaymentMethods
+    this.profilePicture = '';
+    this.userName = '';
+    this.email = '';
+    this.orderList = [];
     this.addressList = [];
     this.cart = new Cart();
     this.defaultAddressId = -1;
@@ -17,6 +17,10 @@ export default class User {
     if (this.addressList.length === 1) {
       this.defaultAddressId = 0;
     }
+  }
+
+  addNewOrder(order) {
+    this.orderList.push(order);
   }
 
   editAddress(id, name, phoneNumber, city, detailAddress) {
