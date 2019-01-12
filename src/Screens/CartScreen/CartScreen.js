@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
-          Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer, FooterTab } from 'native-base';
+          Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer,
+          FooterTab, Toast } from 'native-base';
 
 import CartItemCard from './CartItemCard';
 
@@ -33,6 +34,18 @@ export default class CartScreen extends Component {
     this.setState({cart: user.cart});
   }
 
+  checkOutPressed() {
+    if (this.state.cart.FoodList.length === 0) {
+      Toast.show({
+        text: 'Giỏ hàng rỗng',
+        buttonText: 'Okay',
+        type: "danger"
+      })
+      return;
+    }
+    this.props.navigation.navigate('CheckOut');
+  }
+
   render() {
     return (
       <Container>
@@ -40,9 +53,9 @@ export default class CartScreen extends Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.goBack()}
+              onPress={this.props.navigation.openDrawer}
             >
-              <Icon name='arrow-back' />
+              <Icon name='menu' />
             </Button>
           </Left>
           <Body>
@@ -78,7 +91,7 @@ export default class CartScreen extends Component {
             <Button
               full
               style={{ height: 50, elevation: 6, backgroundColor: '#F5A623' }}
-              onPress={() => this.props.navigation.navigate('CheckOut')}
+              onPress={() => this.checkOutPressed()}
             >
               <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>TIẾN HÀNH ĐẶT</Text>
