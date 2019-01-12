@@ -12,6 +12,8 @@ import CartScreen from './Screens/CartScreen/CartScreen';
 import CheckOutAddressScreen from './Screens/CheckOutScreens/CheckOutAddressScreen';
 import CheckOutPaymentScreen from './Screens/CheckOutScreens/CheckOutPaymentScreen';
 import CheckOutConfirmationScreen from './Screens/CheckOutScreens/CheckOutConfirmationScreen';
+import LocationScreen from './Screens/LocationScreen/LocationScreen';
+import CustomBurgerScreen from './Screens/CustomBurgerScreen/CustomBurgerScreen';
 import NewAddressScreen from './Screens/AddressScreen/NewAddressScreen';
 import EditAddressScreen from './Screens/AddressScreen/EditAddressScreen';
 import AddressListScreen from './Screens/AddressScreen/AddressListScreen'
@@ -71,6 +73,8 @@ const MyDrawerNavigator = createDrawerNavigator({
     }
   )},
   FAQ:  FaqScreen,
+  Location: LocationScreen,
+  CustomBurger: CustomBurgerScreen,
   SignIn: SignInScreen,
 }, {
   contentComponent: (props) => <SideBar {...props} />,
