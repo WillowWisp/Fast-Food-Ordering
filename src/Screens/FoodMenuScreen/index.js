@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
-          Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer, FooterTab, Badge } from 'native-base';
+          Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer,
+          FooterTab, Badge, InputGroup, Input } from 'native-base';
 
 import { foodData } from './data';
 import FoodCard from './FoodCard';
@@ -12,6 +13,9 @@ export default class DynamicListExample extends Component {
   state = {
     activeTab: 'burger',
     badgeText: user.cart.FoodList.length,
+    isSearching: false,
+    searchInput: '',
+    searchResult: '',
   }
 
   openFood = (food) => {
@@ -46,23 +50,47 @@ export default class DynamicListExample extends Component {
     }
   }
 
+  searchFood() {
+    const input = this.state.searchInput;
+    console.log(input);
+    if (input === "" || input === undefined)
+      return;
+    this.setState({ isSearching: true, searchResult: input });
+  }
+
   render() {
     //const changeBadgeText = navigation.getParam('changeBadgeText');
     //const badgeText = navigation.getParam('badgeText');
     return (
       <Container>
-        <Header style={{ height: 70, }}>
-          <Left>
-            <Button transparent onPress={this.props.navigation.openDrawer}>
-              <Icon name='menu' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Danh sách món</Title>
-          </Body>
-          <Right>
+        <Header
+          searchBar rounded
+          style={{ height: 70, justifyContent: 'flex-start', alignItems: 'center', paddingTop: 25, backgroundColor: '#F5A623' }}
+        >
             <TouchableOpacity
-              style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end'}}
+              onPress={this.props.navigation.openDrawer}
+              style={{ marginRight: 10 }}
+            >
+              <Icon
+                name='menu'
+                style={{ color: 'white' }}
+              />
+            </TouchableOpacity>
+            <View style={{ flex: 1, marginTop: 5, marginBottom: 5 }}>
+            <InputGroup
+              style={{ flex: 1, backgroundColor: 'white' }}
+            >
+              <Icon name='md-search' />
+              <Input
+                placeholder='Tìm món'
+                onChangeText={(searchInput) => this.setState({searchInput})}
+                value={this.state.searchInput}
+                onSubmitEditing={() => this.searchFood()}
+              />
+            </InputGroup>
+            </View>
+            <TouchableOpacity
+              style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end', marginLeft: 10, marginBottom: 5}}
               onPress={() => this.props.navigation.navigate('Cart')}
             >
               <Icon
@@ -78,7 +106,6 @@ export default class DynamicListExample extends Component {
                 <Text>{this.state.badgeText}</Text>
               </Badge>
             </TouchableOpacity>
-          </Right>
         </Header>
         <View style={{flex: 1}}>
           <ScrollView
@@ -87,7 +114,9 @@ export default class DynamicListExample extends Component {
             showsVerticalScrollIndicator={false}
             ref='_scrollView'
           >
-            {foodData.map((food) => food.type === this.state.activeTab ?
+            {foodData.map((food) =>
+              ((!this.state.isSearching && food.type === this.state.activeTab)
+                || (this.state.isSearching && food.title.toLowerCase().includes(this.state.searchResult.toLowerCase()))) ?
               <FoodCard
                 food={food}
                 onOpen={this.openFood}
@@ -96,37 +125,41 @@ export default class DynamicListExample extends Component {
               : null
             )}
           </ScrollView>
-          <Footer>
-            <FooterTab
-              tabActiveBgColor = "#E79A00"
-              style={{backgroundColor: "#FFAA00"}}
-            >
-              <Button
-                onPress={this.changeActiveTab.bind(this, 'burger')}
-                style={{backgroundColor: this.state.activeTab === 'burger' ? "#CD8800" : "#FFAA00"}}
+          {
+            !this.state.isSearching ?
+            <Footer>
+              <FooterTab
+                tabActiveBgColor = "#E79A00"
+                style={{backgroundColor: "#FFAA00"}}
               >
-                <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Burger Icon</Text>
-              </Button>
-              <Button
-                onPress={this.changeActiveTab.bind(this, 'pizza')}
-                style={{backgroundColor: this.state.activeTab === 'pizza' ? "#CD8800" : "#FFAA00"}}
-              >
-                <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Pizza Icon</Text>
-              </Button>
-              <Button
-                onPress={this.changeActiveTab.bind(this, 'drink')}
-                style={{backgroundColor: this.state.activeTab === 'drink' ? "#CD8800" : "#FFAA00"}}
-              >
-                <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Drink Icon</Text>
-              </Button>
-              <Button
-                onPress={this.changeActiveTab.bind(this, 'other')}
-                style={{backgroundColor: this.state.activeTab === 'other' ? "#CD8800" : "#FFAA00"}}
-              >
-                <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Other Icon</Text>
-              </Button>
-            </FooterTab>
-          </Footer>
+                <Button
+                  onPress={this.changeActiveTab.bind(this, 'burger')}
+                  style={{backgroundColor: this.state.activeTab === 'burger' ? "#CD8800" : "#FFAA00"}}
+                >
+                  <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Burger Icon</Text>
+                </Button>
+                <Button
+                  onPress={this.changeActiveTab.bind(this, 'pizza')}
+                  style={{backgroundColor: this.state.activeTab === 'pizza' ? "#CD8800" : "#FFAA00"}}
+                >
+                  <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Pizza Icon</Text>
+                </Button>
+                <Button
+                  onPress={this.changeActiveTab.bind(this, 'drink')}
+                  style={{backgroundColor: this.state.activeTab === 'drink' ? "#CD8800" : "#FFAA00"}}
+                >
+                  <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Drink Icon</Text>
+                </Button>
+                <Button
+                  onPress={this.changeActiveTab.bind(this, 'other')}
+                  style={{backgroundColor: this.state.activeTab === 'other' ? "#CD8800" : "#FFAA00"}}
+                >
+                  <Text style={{fontFamily: 'Roboto', fontSize: 14, color: "white"}}>Other Icon</Text>
+                </Button>
+              </FooterTab>
+            </Footer>
+            : null
+          }
         </View>
       </Container>
     );

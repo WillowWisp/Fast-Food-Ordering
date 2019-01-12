@@ -74,4 +74,14 @@ global.helper = {
         return '';
     }
   },
+
+  getSearchResult: (searchInput, foodData) => {
+    var searchResult = [];
+    for (var i = 0; i < foodData.length; i++) {
+      if (foodData[i].title.includes(searchInput)) {
+        searchResult.push(foodData[i]);
+      }
+    }
+    return searchResult;
+  }
 }
