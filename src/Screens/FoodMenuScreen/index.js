@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
-          Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer, FooterTab } from 'native-base';
+          Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer, FooterTab, Badge } from 'native-base';
 
 import { foodData } from './data';
 import FoodCard from './FoodCard';
 import FoodDetail from './FoodDetailScreen/FoodDetailScreen';
+import { NavigationEvents } from 'react-navigation';
 
 export default class DynamicListExample extends Component {
   state = {
     activeTab: 'burger',
+    badgeText: user.cart.FoodList.length,
   }
 
   openFood = (food) => {
@@ -17,6 +19,7 @@ export default class DynamicListExample extends Component {
     //   popupIsOpen: true,
     //   food,
     // });
+    const changeBadgeText = this.props.navigation.getParam('changeBadgeText');
     this.props.navigation.navigate('FoodDetail', {food})
   }
 
@@ -33,19 +36,49 @@ export default class DynamicListExample extends Component {
     this.refs._scrollView.scrollTo({x: 0, y: 0, animated: false});
   }
 
+  changeBadgeText = () => {
+    const num = user.cart.FoodList.length;
+    if (num > 9) {
+      this.setState({ badgeText: "*" });
+    }
+    else {
+      this.setState({ badgeText: num.toString() });
+    }
+  }
+
   render() {
+    //const changeBadgeText = navigation.getParam('changeBadgeText');
+    //const badgeText = navigation.getParam('badgeText');
     return (
       <Container>
-        <Header>
+        <Header style={{ height: 70, }}>
           <Left>
             <Button transparent onPress={this.props.navigation.openDrawer}>
               <Icon name='menu' />
             </Button>
           </Left>
           <Body>
-            <Title>Food Menu</Title>
+            <Title>Danh sách món</Title>
           </Body>
-          <Right />
+          <Right>
+            <TouchableOpacity
+              style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end'}}
+              onPress={() => this.props.navigation.navigate('Cart')}
+            >
+              <Icon
+                name='md-cart'
+                style={{ color: "white", marginRight: 10, marginTop: 10 }}
+              />
+              <NavigationEvents
+                onWillFocus={this.changeBadgeText}
+              />
+              <Badge
+                style={{ alignSelf: 'flex-end', position: 'absolute', scaleX: 0.8, scaleY: 0.8}}
+              >
+                <Text>{this.state.badgeText}</Text>
+              </Badge>
+            </TouchableOpacity>
+          </Right>
         </Header>
         <View style={{flex: 1}}>
           <ScrollView

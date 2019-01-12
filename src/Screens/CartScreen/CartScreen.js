@@ -10,10 +10,33 @@ export default class CartScreen extends Component {
     cart: user.cart,
   }
 
+  getTotalPriceInt() {
+    return this.state.cart.getTotalPrice();
+  }
+
+  getTotalPriceText() {
+    return helper.convertIntToVND(this.state.cart.getTotalPrice());
+  }
+
+  removeItem = (id) => {
+    user.cart.removeFood(id);
+    this.setState({cart: user.cart});
+  }
+
+  increaseItemAmount = (id) => {
+    user.cart.increaseFoodAmount(id);
+    this.setState({cart: user.cart});
+  }
+
+  decreaseItemAmount = (id) => {
+    user.cart.decreaseFoodAmount(id);
+    this.setState({cart: user.cart});
+  }
+
   render() {
     return (
       <Container>
-        <Header>
+        <Header style={{ height: 70, }}>
           <Left>
             <Button
               transparent
@@ -23,33 +46,45 @@ export default class CartScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Text style={{color: "white", textAlign: 'center',}}>My Cart</Text>
+            <Text style={{color: "white", textAlign: 'center',}}>Giỏ hàng</Text>
           </Body>
           <Right/>
         </Header>
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          ref='_scrollView'
-        >
-          {this.state.cart.FoodList.map((cartItem, index) =>
-            <CartItemCard
-              food={cartItem.food}
-              amount={cartItem.amount}
-              key={index}
-            />
-          )}
-        </ScrollView>
-        <Button
-          full
-          warning
-          style={{ height: 50 }}
-        >
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{alignSelf: 'center'}}>Checkout</Text>
+          <View style={{ flex: 1, backgroundColor: "#eeeeee" }}>
+            <ScrollView
+              contentContainerStyle={styles.scrollContent}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+            >
+              {this.state.cart.FoodList.map((cartItem, index) =>
+                <CartItemCard
+                  food={cartItem.food}
+                  amount={cartItem.amount}
+                  removeItem={this.removeItem}
+                  increaseAmount={this.increaseItemAmount}
+                  decreaseAmount={this.decreaseItemAmount}
+                  key={index}
+                />
+              )}
+            </ScrollView>
+            <View style={styles.totalPriceContainer}>
+              <Text
+                style={{ fontSize: 20, fontWeight: "bold", margin: 10 }}
+              >Thành tiền:</Text>
+              <Text
+                style={{ fontSize: 24, fontWeight: "bold", color: "orange", margin: 10 }}
+              >{this.getTotalPriceText()}</Text>
+            </View>
+            <Button
+              full
+              style={{ height: 50, elevation: 6, backgroundColor: '#F5A623' }}
+              onPress={() => this.props.navigation.navigate('CheckOut')}
+            >
+              <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>TIẾN HÀNH ĐẶT</Text>
+              </View>
+            </Button>
           </View>
-        </Button>
       </Container>
     );
   }
@@ -57,13 +92,18 @@ export default class CartScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,         // start below status bar
+    paddingTop: 20,
   },
   scrollContent: {
     paddingBottom: 10,
-    flex: 1,
-    flexDirection: 'column',   // arrange posters in rows
-    flexWrap: 'wrap',       // allow multiple rows
+    flexDirection: 'column',
+    flexWrap: 'wrap',
     backgroundColor: "#eeeeee",
+  },
+  totalPriceContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    elevation: 5,
   },
 });

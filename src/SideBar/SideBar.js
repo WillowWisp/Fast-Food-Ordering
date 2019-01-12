@@ -6,15 +6,15 @@ import { Container, Content, Text, List, ListItem, Left, Icon, Body } from 'nati
 class SideBar extends React.Component {
   state = {
     currentUser: null,
-    routes: ["Home", "FAQ", "SignIn"],
-    iconName: ["home", "md-cloud", "wifi"],
-    routeName: ["Home", "FAQ", "Sign In"],
+    routes: ["Home", "Cart", "AddressList", "FAQ", "SignIn"],
+    iconName: ["home", "md-cart", "md-pin", "md-cloud", "wifi"],
+    routeName: ["Home", "Your Cart", "Sổ địa chỉ", "FAQ", "Sign In"],
   };
 
   componentWillMount() {
     firebase.auth().onAuthStateChanged((user) => {
       this.setState({ currentUser: user });
-      
+
       this.checkLoggedInState();
    });
 

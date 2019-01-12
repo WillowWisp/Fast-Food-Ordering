@@ -19,8 +19,9 @@ export default class Food {
     return priceInt;
   }
 
-  intToPrice() {
-
+  getFormalizedType() {
+    const str = this.type;
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
 }
