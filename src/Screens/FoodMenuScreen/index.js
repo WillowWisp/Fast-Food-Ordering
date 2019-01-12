@@ -73,7 +73,7 @@ export default class DynamicListExample extends Component {
                 onWillFocus={this.changeBadgeText}
               />
               <Badge
-                style={{ alignSelf: 'flex-end', position: 'absolute', scaleX: 0.8, scaleY: 0.8}}
+                style={{ backgroundColor: '#2372F5', alignSelf: 'flex-end', position: 'absolute', scaleX: 0.8, scaleY: 0.8}}
               >
                 <Text>{this.state.badgeText}</Text>
               </Badge>

@@ -36,18 +36,18 @@ global.helper = {
   },
 
   getDeliveryMethod: (deliveryMethod) => {
-    console.log(deliveryMethod);
+    //console.log(deliveryMethod);
     switch (deliveryMethod) {
       case 'standard':
-        console.log('s');
+        //console.log('s');
         return 'Giao hàng tiêu chuẩn';
         break;
       case 'fast':
-        console.log('f');
+        //console.log('f');
         return 'Giao hàng nhanh';
         break;
       default:
-        console.log('d');
+        //console.log('d');
         return '';
     }
   },

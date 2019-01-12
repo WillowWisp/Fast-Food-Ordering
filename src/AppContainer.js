@@ -15,6 +15,8 @@ import CheckOutConfirmationScreen from './Screens/CheckOutScreens/CheckOutConfir
 import NewAddressScreen from './Screens/AddressScreen/NewAddressScreen';
 import EditAddressScreen from './Screens/AddressScreen/EditAddressScreen';
 import AddressListScreen from './Screens/AddressScreen/AddressListScreen'
+import OrderHistoryScreen from './Screens/OrderHistoryScreen/OrderHistoryScreen';
+import OrderDetailScreen from './Screens/OrderHistoryScreen/OrderDetailScreen';
 
 const MyDrawerNavigator = createDrawerNavigator({
   Home:  {
@@ -25,6 +27,8 @@ const MyDrawerNavigator = createDrawerNavigator({
       AddressList: AddressListScreen,
       NewAddress: NewAddressScreen,
       EditAddress: EditAddressScreen,
+      OrderHistory: OrderHistoryScreen,
+      OrderDetail: OrderDetailScreen,
       Cart: CartScreen,
       CheckOut: createStackNavigator({ //Create new navigator to apply special animation
         CheckOutAddress: CheckOutAddressScreen,
