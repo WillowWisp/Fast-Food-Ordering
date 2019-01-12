@@ -1,11 +1,12 @@
 export default class Food {
-  constructor(id, title, poster, price, weight, type) {
+  constructor(id, title, poster, price, weight, type, ingredients = null) {
     this.id = id;
     this.title = title;
     this.poster = poster;
     this.price = price;
     this.weight = weight;
     this.type = type;
+    this.ingredients = ingredients;
   }
 
   getIntPrice() {

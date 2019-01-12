@@ -13,16 +13,16 @@ export default class DynamicListExample extends Component {
     activeTab: 'burger',
     badgeText: user.cart.FoodList.length,
     foodData: [],
+    isSearching: false,
+    searchInput: '',
+    searchResult: '',
   }
 
   componentWillMount() {
     firebase.database().ref('foodMenu/foodData')
       .on('value', snapshot => {
         this.setState({ foodData: snapshot.val() });
-      })
-    isSearching: false,
-    searchInput: '',
-    searchResult: '',
+      });
   }
 
   openFood = (food) => {
