@@ -20,6 +20,12 @@ class SideBar extends React.Component {
         displayName: "Giỏ hàng"
       },
       {
+        name: "OrderHistory",
+        iconName: "md-albums",
+        iconType: "Ionicons",
+        displayName: "Quản lí đơn hàng"
+      },
+      {
         name: "AddressList",
         iconName: "address-book",
         iconType: "FontAwesome",

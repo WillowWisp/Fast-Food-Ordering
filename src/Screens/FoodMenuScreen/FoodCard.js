@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     //marginLeft: 10,
     //marginTop: 10,
     backgroundColor: "#00b327",
+    //backgroundColor: '#2372F5',
     borderRadius: 5,
   },
   priceText: {
