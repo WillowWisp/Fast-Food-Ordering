@@ -124,11 +124,6 @@ export default class FoodDetail extends Component {
               style={{borderRadius: 10}}
               onPress={() => {
                 user.cart.addFood(foodClass, this.state.amount);
-                Toast.show({
-                  text: "Đã thêm thức ăn vào giỏ hàng!",
-                  buttonText: "Okay",
-                  type: "success",
-                });
               }}
             >
               <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>THÊM VÀO GIỎ HÀNG</Text>

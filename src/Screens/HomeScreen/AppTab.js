@@ -17,36 +17,32 @@ class AppTab extends React.Component {
       badgeText: user.cart.FoodList.length,
     };
 
-    user.addNewAddress(new Address('Nguyễn Đình Phú Thịnh',
-                                    '0787774666',
-                                    'Hồ Chí Minh',
-                                    'Ký túc xá Khu A ĐHQG Tp.HCM - Khu Phố 6, Phường Linh Trung, Quận Thủ Đức'));
-    user.addNewAddress(new Address('Vladimir Putin',
-                                    '0123456789',
-                                    'Russia',
-                                    'Vodka Cyka Blyat'));
-    user.cart.addFood(new Food(0, 'Ramen Burger',
-                              'https://c8.alamy.com/comp/HGB7R0/new-fast-food-ramen-burger-close-up-on-a-paper-on-the-wooden-table-HGB7R0.jpg',
-                              '50.000 VNĐ', '420g', 'burger'), 2);
-    user.cart.addFood(new Food(1, 'Rustic Sandwich',
-                              'https://c8.alamy.com/comp/HFHJHT/rustic-sandwich-with-beefsteak-fried-egg-and-french-fries-vertical-HFHJHT.jpg',
-                              '40.000 VNĐ', '420g', 'other'), 1);
+    // user.addNewAddress(new Address('Nguyễn Đình Phú Thịnh',
+    //                                 '0787774666',
+    //                                 'Hồ Chí Minh',
+    //                                 'Ký túc xá Khu A ĐHQG Tp.HCM - Khu Phố 6, Phường Linh Trung, Quận Thủ Đức'));
+    // user.addNewAddress(new Address('Vladimir Putin',
+    //                                 '0123456789',
+    //                                 'Russia',
+    //                                 'Vodka Cyka Blyat'));
+    // user.cart.addFood(new Food(0, 'Ramen Burger',
+    //                           'https://c8.alamy.com/comp/HGB7R0/new-fast-food-ramen-burger-close-up-on-a-paper-on-the-wooden-table-HGB7R0.jpg',
+    //                           '50.000 VNĐ', '420g', 'burger'), 2);
+    // user.cart.addFood(new Food(1, 'Rustic Sandwich',
+    //                           'https://c8.alamy.com/comp/HFHJHT/rustic-sandwich-with-beefsteak-fried-egg-and-french-fries-vertical-HFHJHT.jpg',
+    //                           '40.000 VNĐ', '420g', 'other'), 1);
 
 
   }
 
   componentWillMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
-    })
-  }
-
-  renderContent = () => {
-    if (this.state.currentUser) {
-      return (<Text onPress={() => firebase.auth().signOut()}>Hello</Text>);
-    }
-
-    return (<Text>Not logged in.</Text>);
+    firebase.auth().onAuthStateChanged(currentUser => {
+      if (currentUser) {
+        user.uid = currentUser.uid;
+      } else {
+        user.uid = '';
+      }
+    });
   }
 
   changeBadgeText = () => {

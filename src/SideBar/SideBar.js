@@ -59,9 +59,9 @@ class SideBar extends React.Component {
   };
 
   componentWillMount() {
-    firebase.auth().onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
-
+    firebase.auth().onAuthStateChanged((currentUser) => {
+      this.setState({ currentUser: currentUser });
+      
       this.checkLoggedInState();
    });
 

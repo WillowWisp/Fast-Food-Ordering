@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
-          Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer, FooterTab } from 'native-base';
+          Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer, FooterTab, Toast } from 'native-base';
 
 import CartItemCard from './CartItemCard';
 
@@ -78,7 +78,16 @@ export default class CartScreen extends Component {
             <Button
               full
               style={{ height: 50, elevation: 6, backgroundColor: '#F5A623' }}
-              onPress={() => this.props.navigation.navigate('CheckOut')}
+              onPress={() => {
+                if (user.uid === '') {
+                  Toast.show({
+                    text: "Chức năng này cần đăng nhập.",
+                    buttonText: "Okay",
+                  });
+                } else {
+                  this.props.navigation.navigate('CheckOut')
+                }
+              }}
             >
               <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>TIẾN HÀNH ĐẶT</Text>

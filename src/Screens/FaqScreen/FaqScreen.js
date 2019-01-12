@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 
-import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, StyleProvider, Accordion } from 'native-base';
+import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, StyleProvider, Accordion, Text } from 'native-base';
 import getTheme from '../../../native-base-theme/components';
 import customizedTheme from '../../../native-base-theme/variables/variables';
 
@@ -43,6 +43,9 @@ class FaqScreen extends React.Component {
               contentStyle={{backgroundColor: '#ffe5c6'}}
               expanded={0}
             />
+            <Button onPress={() => console.log(user.uid)}>
+              <Text>Click</Text>
+            </Button>
           </Content>
 
         </Container>
