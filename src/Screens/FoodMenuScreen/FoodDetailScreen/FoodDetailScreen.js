@@ -85,7 +85,7 @@ export default class FoodDetail extends Component {
               onPress={this.changeOptionVisible}
             >
               <Left>
-                <Text style={{color: 'black', fontWeight: 'bold', fontSize: 14}}>Options</Text>
+                <Text style={{color: 'black', fontWeight: 'bold', fontSize: 14}}>Tùy chọn</Text>
               </Left>
               <Body>
                 <Icon name={this.getArrowIcon()} />
@@ -94,7 +94,7 @@ export default class FoodDetail extends Component {
             </TouchableOpacity>
             {this.state.optionVisible === true ?
               <View style={styles.amountContainer}>
-                <Text style={{fontSize: 20}}>Amount: </Text>
+                <Text style={{fontSize: 20}}>Số lượng: </Text>
                 <TouchableOpacity
                   style={styles.amountButton}
                   onPress={this.decreaseAmount}
@@ -125,13 +125,13 @@ export default class FoodDetail extends Component {
               onPress={() => {
                 user.cart.addFood(foodClass, this.state.amount);
                 Toast.show({
-                  text: "Food added to cart",
+                  text: "Đã thêm thức ăn vào giỏ hàng!",
                   buttonText: "Okay",
                   type: "success",
                 });
               }}
             >
-              <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>Add To Cart</Text>
+              <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>THÊM VÀO GIỎ HÀNG</Text>
             </Button>
           </View>
         </View>

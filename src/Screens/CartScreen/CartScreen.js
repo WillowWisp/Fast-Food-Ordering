@@ -46,7 +46,7 @@ export default class CartScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Text style={{color: "white", textAlign: 'center',}}>My Cart</Text>
+            <Text style={{color: "white", textAlign: 'center',}}>Giỏ hàng</Text>
           </Body>
           <Right/>
         </Header>
@@ -55,7 +55,6 @@ export default class CartScreen extends Component {
               contentContainerStyle={styles.scrollContent}
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
-              ref='_scrollView'
             >
               {this.state.cart.FoodList.map((cartItem, index) =>
                 <CartItemCard
@@ -71,19 +70,18 @@ export default class CartScreen extends Component {
             <View style={styles.totalPriceContainer}>
               <Text
                 style={{ fontSize: 20, fontWeight: "bold", margin: 10 }}
-              >Total:</Text>
+              >Thành tiền:</Text>
               <Text
                 style={{ fontSize: 24, fontWeight: "bold", color: "orange", margin: 10 }}
               >{this.getTotalPriceText()}</Text>
             </View>
             <Button
               full
-              warning
-              style={{ height: 50, elevation: 6 }}
+              style={{ height: 50, elevation: 6, backgroundColor: '#F5A623' }}
               onPress={() => this.props.navigation.navigate('CheckOut')}
             >
               <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>Checkout</Text>
+                <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>TIẾN HÀNH ĐẶT</Text>
               </View>
             </Button>
           </View>
