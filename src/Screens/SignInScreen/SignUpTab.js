@@ -22,7 +22,10 @@ class SignUpTab extends Component {
     }
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate('Home'))
+      .then(() => {
+        this.props.navigation.navigate('Home');
+        this.setState({ email: '', password: '', confirmPassword: '' });
+      })
       .catch(() => Toast.show({
         text: 'Invalid Email or Password!',
         buttonText: 'Okay',
