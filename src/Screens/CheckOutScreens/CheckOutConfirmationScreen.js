@@ -2,29 +2,99 @@ import React, { Component } from 'react';
 import { View, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
           Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer, FooterTab, Radio, Toast } from 'native-base';
+import firebase from 'firebase';
+import Modal from 'react-native-modal';
 import Order from '../../AppData/Order';
 import Cart from '../../AppData/Cart';
 
 
 export default class CheckOutConfirmationScreen extends Component {
-    createOrder() {
+  state = {
+    isModalVisible: false,
+    orderId: '0',
+  }
+
+  createOrder() {
+    const id = this.state.orderId;
     const address = this.props.navigation.getParam('address');
     const paymentMethod = this.props.navigation.getParam('paymentMethod');
     const deliveryMethod = this.props.navigation.getParam('deliveryMethod');
-    const cart = this.props.navigation.getParam('cart');
-    const id = '1616511'; //temp
-    const date = '12/1/2019'; //temp
+    const cartRef = this.props.navigation.getParam('cart');
+    const cart = new Cart(cartRef.FoodList);
+    //const date = '12/1/2019'; //temp
+    const date = new Date().toISOString().slice(0, 10);
+    //console.log(date);
     const status = 'Đang xử lí';
-    user.addNewOrder(new Order(id, date, status, address, deliveryMethod, paymentMethod, new Cart(cart.FoodList)));
+    user.addNewOrder(new Order(id, date, status, address, deliveryMethod, paymentMethod, cart));
     user.cart.emptyCart();
 
-    Toast.show({
-      text: 'Đặt thức ăn thành công!',
-      buttonText: 'Okay',
-      type: "success",
-    })
+    firebase.database().ref('orderList/' + id).set({
+      id: id,
+      date: date,
+      status: status,
+      address: address,
+      deliveryMethod: deliveryMethod,
+      paymentMethod: paymentMethod,
+      cart: cart,
+    });
 
-    this.props.navigation.navigate('HomeScreen');
+    this.setState({ isModalVisible: true });
+
+    // Toast.show({
+    //   text: 'Đặt thức ăn thành công!',
+    //   buttonText: 'Okay',
+    //   type: "success",
+    // })
+
+    // console.log(id);
+    // this.props.navigation.navigate('HomeScreen');
+  }
+
+  getIdAndCreateOrder() {
+    //var id;
+    //const id = '';
+    // firebase.database().ref('orderList/')
+    //   .once('value').then((snapshot) => {
+    //     const fetchedOrderList = snapshot.val();
+    //     //console.log(fetchedOrderList);
+    //     this.setState({ orderId: fetchedOrderList.length.toString() });
+    //     console.log(this.state.orderId);
+    //   });
+
+    firebase.database().ref('orderList/').once('value').then((snapshot) => {
+      const fetchedOrderList = snapshot.val();
+      this.setState({ orderId: fetchedOrderList.length.toString() });
+      this.createOrder();
+    });
+
+
+  }
+
+  renderModal() {
+    return (
+      <Modal isVisible={this.state.isModalVisible} onBackdropPress={() => this.setState({isModalVisible: false})}>
+          <View style={styles.modalStyle}>
+            <View style={{ margin: 20 }}>
+              <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Đơn hàng của bạn đã được gửi lên hệ thống!</Text>
+            </View>
+            <Icon
+              name='ios-checkmark-circle-outline'
+              style={{ fontSize: 120, color: 'green' }}
+            />
+            <View style={{ marginVertical: 20 }}>
+              <Button
+                danger
+                onPress={() => {
+                  this.setState({isModalVisible: false});
+                  this.props.navigation.navigate('HomeScreen');
+                }}
+              >
+                <Text style={{fontSize: 18, fontWeight: '600', color: 'white'}}>ĐÓNG</Text>
+              </Button>
+            </View>
+          </View>
+        </Modal>
+    );
   }
 
   render() {
@@ -34,6 +104,7 @@ export default class CheckOutConfirmationScreen extends Component {
     const cart = this.props.navigation.getParam('cart');
     return (
       <Container>
+        {this.renderModal()}
         <Header style={{ height: 70, }}>
           <Left>
             <Button
@@ -129,7 +200,7 @@ export default class CheckOutConfirmationScreen extends Component {
                       </View>
                       <View style={styles.cartItemInfoContainer}>
                         <Text style={styles.cartTitle}>{cartItem.food.title}</Text>
-                        <Text style={styles.cartSubtext}>{cartItem.food.getFormalizedType()}</Text>
+                        <Text style={styles.cartSubtext}>{globalPlaces[cartItem.food.placeId].title}</Text>
                         <View style={styles.priceContainer}>
                           <Text style={styles.price}>{cartItem.food.price}</Text>
                           <Text style={styles.amount}>x {cartItem.amount}</Text>
@@ -169,7 +240,7 @@ export default class CheckOutConfirmationScreen extends Component {
           <Button
             full
             style={{ height: 50, elevation: 6, backgroundColor: '#F5A623' }}
-            onPress={() => this.createOrder()}
+            onPress={() => this.getIdAndCreateOrder()}
           >
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
               <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>TIẾN HÀNH ĐẶT HÀNG</Text>
@@ -302,5 +373,21 @@ const styles = StyleSheet.create({
   amount: {
     fontSize: 16,
     marginHorizontal: 5,
+  },
+  modalStyle: {
+    backgroundColor: 'white',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 3,
+  },
+  modalCloseButton: {
+    width: 90,
+    height: 50,
+    backgroundColor: '#ff9c2b',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
   },
 });

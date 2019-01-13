@@ -71,6 +71,11 @@ class AppTab extends React.Component {
       const fetchedAddress = {...snapshot.val()[key]};
       user.addNewAddress(new Address(fetchedAddress.name, fetchedAddress.phoneNumber, fetchedAddress.city, fetchedAddress.detailAddress, key));
     });
+    firebase.database().ref('places/')
+      .on('value', (snapshot) => {
+        const fetchedPlaces = snapshot.val();
+        globalPlaces = fetchedPlaces;
+      });
   }
 
   changeBadgeText = () => {

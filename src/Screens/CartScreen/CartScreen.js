@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, ScrollView, StyleSheet } from 'react-native';
 import { Container, Header, Content, List, ListItem, Text, Left, Body, Right,
-          Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer, FooterTab, Toast } from 'native-base';
+          Thumbnail, Button, Icon, Title, Tabs, Tab, TabHeading, Footer,
+          FooterTab, Toast } from 'native-base';
+
 
 import CartItemCard from './CartItemCard';
 
@@ -33,6 +35,18 @@ export default class CartScreen extends Component {
     this.setState({cart: user.cart});
   }
 
+  checkOutPressed() {
+    if (this.state.cart.FoodList.length === 0) {
+      Toast.show({
+        text: 'Giỏ hàng rỗng',
+        buttonText: 'Okay',
+        type: "danger"
+      })
+      return;
+    }
+    this.props.navigation.navigate('CheckOut');
+  }
+
   render() {
     return (
       <Container>
@@ -40,9 +54,9 @@ export default class CartScreen extends Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.goBack()}
+              onPress={this.props.navigation.openDrawer}
             >
-              <Icon name='arrow-back' />
+              <Icon name='menu' />
             </Button>
           </Left>
           <Body>
@@ -85,7 +99,7 @@ export default class CartScreen extends Component {
                     buttonText: "Okay",
                   });
                 } else {
-                  this.props.navigation.navigate('CheckOut')
+                  this.checkOutPressed();
                 }
               }}
             >

@@ -44,7 +44,7 @@ export default class FoodDetail extends Component {
   render() {
     const { navigation } = this.props;
     const food = navigation.getParam('food');
-    const foodClass = new Food(food.id, food.title, food.poster, food.price, food.weight, food.type);
+    const foodClass = new Food(food.id, food.title, food.poster, food.price, food.weight, food.type, undefined, food.placeId);
     const cart = new Cart();
 
     return (

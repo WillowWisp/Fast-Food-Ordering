@@ -9,7 +9,7 @@ export default class FoodCard extends Component {
   //   onOpen: PropTypes.func.isRequired,
   // }
   render() {
-    const { food, food: { title, poster, price, weight }, onOpen } = this.props;
+    const { food, food: { title, poster, price, weight, placeId }, onOpen } = this.props;
     return (
       <TouchableOpacity
         style={styles.containerStyle}
@@ -24,7 +24,9 @@ export default class FoodCard extends Component {
             <View style={styles.priceContainer}>
               <Text style={styles.priceText}>{price}</Text>
             </View>
-            <Text style={styles.weightText}>{weight}</Text>
+            <View style={{...styles.priceContainer, paddingHorizontal: 5, backgroundColor: 'rgba(0,0,0,0.7)'}}>
+              <Text style={styles.weightText}>{weight}</Text>
+            </View>
           </View>
         </View>
         <View style={{...styles.layout, backgroundColor: "white"}}>
@@ -33,7 +35,7 @@ export default class FoodCard extends Component {
               {title}
             </Text>
             <Text style={styles.infoText}>
-              Qua mon qua mon qua mon qua mon qua mon
+              {globalPlaces[placeId].title}
             </Text>
           </View>
         </View>
@@ -105,6 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
+    opacity: 1,
   },
   foodTextContainer: {
     marginHorizontal: 15,

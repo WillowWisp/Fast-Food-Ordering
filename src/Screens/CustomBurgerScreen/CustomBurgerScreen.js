@@ -63,7 +63,7 @@ export default class CustomBurgerScreen extends React.Component {
     const totalIngredients = this.getTotalIngredients();
     if (amount >= 3 || totalIngredients >= 9)
       return;
-    
+
     const updatedIngredients = {...this.state.ingredients};
     amount++;
     updatedIngredients[ingredientName] = amount;
@@ -75,7 +75,7 @@ export default class CustomBurgerScreen extends React.Component {
     const totalIngredients = this.getTotalIngredients();
     if (amount <= 0 || totalIngredients <= 3)
       return;
-    
+
     const updatedIngredients = {...this.state.ingredients};
     amount--;
     updatedIngredients[ingredientName] = amount;
@@ -97,14 +97,14 @@ export default class CustomBurgerScreen extends React.Component {
             </Text>
           </View>
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
-           <TouchableOpacity onPress={() => this.increaseIngredient(ingredientName)}>
-             <Icon name='md-add-circle-outline' style={{color: '#00db3a'}} />
-           </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.decreaseIngredient(ingredientName)}>
+            <Icon name='md-remove-circle-outline' style={{color: '#ff2b63'}} />
+          </TouchableOpacity>
            <Text style={{color: '#333'}}>
              {this.state.ingredients[ingredientName]}
            </Text>
-           <TouchableOpacity onPress={() => this.decreaseIngredient(ingredientName)}>
-             <Icon name='md-remove-circle-outline' style={{color: '#ff2b63'}} />
+           <TouchableOpacity onPress={() => this.increaseIngredient(ingredientName)}>
+             <Icon name='md-add-circle-outline' style={{color: '#00db3a'}} />
            </TouchableOpacity>
           </View>
         </View>
@@ -146,7 +146,7 @@ export default class CustomBurgerScreen extends React.Component {
 
   _renderIngredient = (ingredientName) => {
     const totalIngredients = this.getTotalIngredients();
-    
+
     const returnValue = [];
     const ingredientStyles = [];
 
@@ -196,7 +196,7 @@ export default class CustomBurgerScreen extends React.Component {
 
       returnValue.push(<Image resizeMode='stretch' source={imageSource} style={ingredientStyles[i]} key={ingredientName + i} />);
     }
-    
+
     return returnValue;
   }
 
