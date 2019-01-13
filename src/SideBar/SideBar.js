@@ -8,7 +8,7 @@ class SideBar extends React.Component {
     currentUser: null,
     routes: [
       {
-        name: "Home",
+        name: "HomeScreen",
         iconName: "home",
         iconType: "Ionicons",
         displayName: "Trang chủ"
@@ -94,7 +94,7 @@ class SideBar extends React.Component {
       firebase.auth().signOut()
         .then(() => {
           this.props.navigation.closeDrawer();
-          this.props.navigation.navigate('Home');
+          this.props.navigation.navigate('HomeScreen');
         });
     } else {
       this.props.navigation.navigate(routeName)

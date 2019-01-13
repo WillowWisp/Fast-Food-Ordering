@@ -7,6 +7,8 @@ import { View, StyleSheet, TouchableOpacity, Image, ScrollView, ImageBackground 
 import { NavigationEvents } from 'react-navigation';
 import Address from '../../AppData/Address'
 import Food from '../../AppData/Food'
+import Order from '../../AppData/Order';
+import Cart from '../../AppData/Cart';
 
 class AppTab extends React.Component {
   constructor() {
@@ -40,26 +42,13 @@ class AppTab extends React.Component {
       if (currentUser) {
         user.uid = currentUser.uid;
         
-        user.addressList = [];
+        this.fetchAndLoadAddressList();
+        this.fetchAndLoadOrderList();
 
-        firebase.database().ref(`users/${user.uid}/addressList`)
-          .once('value', snapshot => {
-            if (snapshot.val()) {
-              this.loadUsersAddressList(snapshot);
-            }
-          });
-        
-        firebase.database().ref(`users/${user.uid}/defaultAddressId`)
-          .on('value', snapshot => {
-            if (snapshot.val() !== undefined) {
-              user.defaultAddressId = snapshot.val();
-              console.log(user.defaultAddressId);
-            }
-            //console.log(snapshot.val());
-          });
       } else {
         user.uid = '';
         user.addressList = [];
+        user.orderList = [];
         user.defaultAddressId = -1;
       }
     });
@@ -72,10 +61,55 @@ class AppTab extends React.Component {
       });
   }
 
+
+  fetchAndLoadAddressList = () => {
+    user.addressList = [];
+
+    firebase.database().ref(`users/${user.uid}/addressList`)
+      .once('value', snapshot => {
+        if (snapshot.val()) {
+          this.loadUsersAddressList(snapshot);
+        }
+      });
+    
+    firebase.database().ref(`users/${user.uid}/defaultAddressId`)
+      .on('value', snapshot => {
+        if (snapshot.val() !== undefined) {
+          user.defaultAddressId = snapshot.val();
+        }
+      });
+  }
+
   loadUsersAddressList = (snapshot) => {
     Object.keys(snapshot.val()).map((key) => {
       const fetchedAddress = {...snapshot.val()[key]};
       user.addNewAddress(new Address(fetchedAddress.name, fetchedAddress.phoneNumber, fetchedAddress.city, fetchedAddress.detailAddress, key));
+    });
+  }
+
+  fetchAndLoadOrderList = () => {
+    user.orderList = [];
+
+    firebase.database().ref(`users/${user.uid}/orderList`)
+      .once('value', snapshot => {
+        if (snapshot.val()) {
+          this.loadUsersOrderList(snapshot);
+        }
+      });
+  }
+
+  loadUsersOrderList = (snapshot) => {
+    snapshot.val().forEach((order) => {
+      const newFoodList = [];
+      order.cart.FoodList.forEach((item, index) => {
+        const { id, title, poster, price, weight, type, ingredients, placeId } = item.food
+        const newFood = new Food(id, title, poster, price, weight, type, ingredients, placeId);
+        newFoodList.push({food: newFood, amount: item.amount});
+      });
+      const newCart = new Cart(newFoodList);
+      const newAddress = new Address(order.address.name, order.address.phoneNumber, order.address.city, order.address.detailAddress, order.address.firebaseID)
+      const newOrder = new Order(order.id, order.date, order.status, newAddress, order.deliveryMethod, order.paymentMethod, newCart)
+      user.addNewOrder(newOrder);
     });
   }
 

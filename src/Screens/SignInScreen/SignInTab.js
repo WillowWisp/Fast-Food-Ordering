@@ -11,7 +11,10 @@ class SignInScreen extends Component {
   onSignInPress = () => {
     const { email, password } = this.state
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate('Home'))
+      .then(() => {
+        this.props.navigation.navigate('HomeScreen');
+        this.setState({ email: '', password: '' });
+      })
       .catch(() => Toast.show({
         text: 'Wrong email or password!',
         buttonText: 'Okay',

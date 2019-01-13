@@ -23,20 +23,13 @@ export default class CheckOutConfirmationScreen extends Component {
     const cart = new Cart(cartRef.FoodList);
     //const date = '12/1/2019'; //temp
     const date = new Date().toISOString().slice(0, 10);
-    //console.log(date);
     const status = 'Đang xử lí';
-    user.addNewOrder(new Order(id, date, status, address, deliveryMethod, paymentMethod, cart));
-    user.cart.emptyCart();
+    
+    const newOrder = new Order(id, date, status, address, deliveryMethod, paymentMethod, cart);
+    user.pushOrderToFirebase(newOrder);
+    user.addNewOrder(newOrder);
 
-    firebase.database().ref('orderList/' + id).set({
-      id: id,
-      date: date,
-      status: status,
-      address: address,
-      deliveryMethod: deliveryMethod,
-      paymentMethod: paymentMethod,
-      cart: cart,
-    });
+    user.cart.emptyCart();
 
     this.setState({ isModalVisible: true });
 
@@ -60,10 +53,18 @@ export default class CheckOutConfirmationScreen extends Component {
     //     this.setState({ orderId: fetchedOrderList.length.toString() });
     //     console.log(this.state.orderId);
     //   });
+    let refString = '';
+    refString = user.uid !== '' ? `users/${user.uid}/orderList/` :
+                                  `orderList/`;
 
-    firebase.database().ref('orderList/').once('value').then((snapshot) => {
-      const fetchedOrderList = snapshot.val();
-      this.setState({ orderId: fetchedOrderList.length.toString() });
+    firebase.database().ref(refString).once('value').then((snapshot) => {
+      let fetchedOrderListLength
+      if (snapshot.val()) {
+        fetchedOrderListLength = snapshot.val().length;
+      } else {
+        fetchedOrderListLength = 0
+      }
+      this.setState({ orderId: fetchedOrderListLength.toString() });
       this.createOrder();
     });
 

@@ -36,6 +36,21 @@ export default class User {
     }
   }
 
+  pushOrderToFirebase(order) {
+    let refString = '';
+    refString = user.uid !== '' ? `users/${user.uid}/orderList/${order.id}` : `orderList/${order.id}`;
+
+    firebase.database().ref(refString).set({
+      id: order.id,
+      date: order.date,
+      status: order.status,
+      address: order.address,
+      deliveryMethod: order.deliveryMethod,
+      paymentMethod: order.paymentMethod,
+      cart: order.cart,
+    });
+  }
+
   addNewOrder(order) {
     this.orderList.push(order);
   }
