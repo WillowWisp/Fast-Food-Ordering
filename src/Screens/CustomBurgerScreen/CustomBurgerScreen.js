@@ -202,6 +202,7 @@ export default class CustomBurgerScreen extends React.Component {
 
   onAddPress = () => {
     const newFood = new Food(currentID, 'Custom Hamburger', 'https://i.imgur.com/XRexh1R.png', helper.convertIntToVND(this.state.totalPrice), 0, 'custom', this.state.ingredients);
+    user.cart.addFoodToFirebase(newFood, 1);
     user.cart.addFood(newFood, 1);
     currentID++;
   }

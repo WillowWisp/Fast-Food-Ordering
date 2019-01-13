@@ -19,6 +19,7 @@ export default class FoodDetail extends Component {
   state = {
     optionVisible: false,
     amount: 1,
+    buttonClickable: true,
   }
 
   increaseAmount = () => {
@@ -122,8 +123,12 @@ export default class FoodDetail extends Component {
               block
               warning
               style={{borderRadius: 10}}
+              disabled={!this.state.buttonClickable}
               onPress={() => {
+                user.cart.addFoodToFirebase(foodClass, this.state.amount);
                 user.cart.addFood(foodClass, this.state.amount);
+                this.setState({buttonClickable: false});
+                setTimeout(() => this.setState({buttonClickable: true}), 400);
               }}
             >
               <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>THÊM VÀO GIỎ HÀNG</Text>

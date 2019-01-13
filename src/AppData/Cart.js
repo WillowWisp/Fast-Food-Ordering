@@ -1,5 +1,6 @@
 import Food from './Food';
 import { Toast } from 'native-base';
+import firebase from 'firebase';
 
 export default class Cart {
 constructor(FoodList) {
@@ -11,18 +12,50 @@ constructor(FoodList) {
     }
   }
 
-  addFood(food, amount) {
-    if (user.uid === '') {
-      Toast.show({
-        text: "Chức năng này cần đăng nhập.",
-        buttonText: "Okay",
-      });
-      return;
-    }
+  addFoodToFirebase(food, amount) {
+    if (user.uid !== '') {
 
+      let found = false;
+
+      const ref = firebase.database().ref(`users/${user.uid}/cart/FoodList`);
+
+      ref.once('value', snapshot => {
+        if (snapshot.val() !== null) {
+          console.log(snapshot.val());
+          const fetchedData = snapshot.val();
+          Object.keys(snapshot.val()).forEach(key => {
+            if (fetchedData[key].food.id === food.id) {
+              //Nếu đã có food id này thì tăng amount
+              found = true;
+              const newAmount = fetchedData[key].amount + amount;
+              firebase.database().ref(`users/${user.uid}/cart/FoodList/${key}`)
+                .update({ amount: newAmount });
+            }
+          });
+        }
+      }).then(() => {
+        if (found === false) {
+          ref.push({
+            food: food,
+            amount: amount,
+          })
+            .then(() => console.log('da them hang'));
+        }
+      });
+    }
+  }
+
+  addFood(food, amount) {
     for (var i = 0; i < this.FoodList.length; i++) {
       if (this.FoodList[i].food.id === food.id) {
         this.FoodList[i].amount += amount;
+        
+        Toast.show({
+          text: "Đã thêm hàng vào giỏ!",
+          buttonText: "Okay",
+          type: "success",
+        });
+
         return;
       }
     }
@@ -32,6 +65,20 @@ constructor(FoodList) {
       text: "Đã thêm hàng vào giỏ!",
       buttonText: "Okay",
       type: "success",
+    });
+  }
+
+  removeFoodOnFirebase(id) {
+    const ref = firebase.database().ref(`users/${user.uid}/cart/FoodList`);
+    ref.once('value', snapshot => {
+      const fetchedData = snapshot.val();
+      Object.keys(fetchedData).forEach(key => {
+        if (fetchedData[key].food.id === id) {
+          //Tìm id và xóa
+          firebase.database().ref(`users/${user.uid}/cart/FoodList/${key}`)
+            .remove();
+        }
+      })
     });
   }
 
@@ -45,6 +92,21 @@ constructor(FoodList) {
     }
   }
 
+  increaseFoodAmountOnFirebase(id) {
+    const ref = firebase.database().ref(`users/${user.uid}/cart/FoodList`);
+    ref.once('value', snapshot => {
+      const fetchedData = snapshot.val();
+      Object.keys(fetchedData).forEach(key => {
+        if (fetchedData[key].food.id === id) {
+          //Tìm id và tăng amount
+          const newAmount = fetchedData[key].amount + 1;
+          firebase.database().ref(`users/${user.uid}/cart/FoodList/${key}`)
+            .update({ amount: newAmount });
+        }
+      })
+    });
+  }
+
   increaseFoodAmount(id) {
     for (var i = 0; i < this.FoodList.length; i++) {
       //console.log(this.FoodList[i].food.id, id);
@@ -54,6 +116,24 @@ constructor(FoodList) {
       }
     }
   }
+
+  decreaseFoodAmountOnFirebase(id) {
+    const ref = firebase.database().ref(`users/${user.uid}/cart/FoodList`);
+    ref.once('value', snapshot => {
+      const fetchedData = snapshot.val();
+      Object.keys(fetchedData).forEach(key => {
+        if (fetchedData[key].food.id === id) {
+          //Tìm id và tăng amount
+          if (fetchedData[key].amount > 1) {
+            const newAmount = fetchedData[key].amount - 1;
+            firebase.database().ref(`users/${user.uid}/cart/FoodList/${key}`)
+              .update({ amount: newAmount });
+          }
+        }
+      })
+    });
+  }
+
   decreaseFoodAmount(id) {
     for (var i = 0; i < this.FoodList.length; i++) {
       //console.log(this.FoodList[i].food.id, id);

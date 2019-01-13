@@ -3,53 +3,11 @@ import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Content, Toast, Text } from 'native-base';
 import Modal from 'react-native-modal';
 
-class CCCartItemCard extends Component {
-  render() {
-    const { food, amount } = this.props;
-    return (
-      <View style={styles.containerStyle}>
-        <Image
-          style={styles.image}
-          source={{uri: food.poster}}
-        />
-        <View style={styles.detailContainer}>
-          <View style={styles.textContainer}>
-            <Text>{food.title}</Text>
-            <Text>{food.weight}</Text>
-          </View>
-          <View style={styles.priceAndAmountContainer}>
-            <View>
-              <Text>{helper.convertIntToVND(food.getIntPrice() * amount)}</Text>
-            </View>
-            <View style={styles.amountContainer}>
-              <TouchableOpacity
-                style={styles.amountButton}
-              >
-                <Icon
-                  name='md-remove-circle-outline'
-                  style={{fontSize: 30, color: 'black'}}
-                />
-              </TouchableOpacity>
-              <Text style={{fontSize: 20}}>{amount}</Text>
-              <TouchableOpacity
-                style={styles.amountButton}
-              >
-                <Icon
-                  name='md-add-circle-outline'
-                  style={{fontSize: 30, color: 'black'}}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </View>
-    );
-  }
-}
 
 export default class CartItemCard extends Component {
   state = {
     isModalVisible: false,
+    buttonClickable: true,
   }
 
   _renderInfoButton = () => {
@@ -133,7 +91,12 @@ export default class CartItemCard extends Component {
           <View style={{flex: 1, alignItems: 'flex-start', flexDirection: "row", marginHorizontal: 10, }}>
             <TouchableOpacity
               style={styles.amountButton}
-              onPress={() => decreaseAmount(food.id)}
+              disabled={!this.state.buttonClickable}
+              onPress={() => {
+                decreaseAmount(food.id);
+                this.setState({buttonClickable: false});
+                setTimeout(() => this.setState({buttonClickable: true}), 400);
+              }}
             >
               <Icon
                 name='md-remove-circle-outline'
@@ -143,7 +106,12 @@ export default class CartItemCard extends Component {
             <Text style={{fontSize: 20}}>{amount}</Text>
             <TouchableOpacity
               style={styles.amountButton}
-              onPress={() => increaseAmount(food.id)}
+              disabled={!this.state.buttonClickable}
+              onPress={() => {
+                increaseAmount(food.id);
+                this.setState({buttonClickable: false});
+                setTimeout(() => this.setState({buttonClickable: true}), 400);
+              }}
             >
               <Icon
                 name='md-add-circle-outline'

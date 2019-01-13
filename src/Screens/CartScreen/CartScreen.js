@@ -21,16 +21,19 @@ export default class CartScreen extends Component {
   }
 
   removeItem = (id) => {
+    user.cart.removeFoodOnFirebase(id);
     user.cart.removeFood(id);
     this.setState({cart: user.cart});
   }
 
   increaseItemAmount = (id) => {
+    user.cart.increaseFoodAmountOnFirebase(id);
     user.cart.increaseFoodAmount(id);
     this.setState({cart: user.cart});
   }
 
   decreaseItemAmount = (id) => {
+    user.cart.decreaseFoodAmountOnFirebase(id);
     user.cart.decreaseFoodAmount(id);
     this.setState({cart: user.cart});
   }
@@ -54,9 +57,9 @@ export default class CartScreen extends Component {
           <Left>
             <Button
               transparent
-              onPress={this.props.navigation.openDrawer}
+              onPress={() => this.props.navigation.goBack()}
             >
-              <Icon name='menu' />
+              <Icon name='arrow-back' />
             </Button>
           </Left>
           <Body>
@@ -92,16 +95,7 @@ export default class CartScreen extends Component {
             <Button
               full
               style={{ height: 50, elevation: 6, backgroundColor: '#F5A623' }}
-              onPress={() => {
-                if (user.uid === '') {
-                  Toast.show({
-                    text: "Chức năng này cần đăng nhập.",
-                    buttonText: "Okay",
-                  });
-                } else {
-                  this.checkOutPressed();
-                }
-              }}
+              onPress={() => this.checkOutPressed()}
             >
               <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{alignSelf: 'center', color: 'white', fontWeight: 'bold', fontSize: 18}}>TIẾN HÀNH ĐẶT</Text>

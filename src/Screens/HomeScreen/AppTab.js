@@ -44,11 +44,13 @@ class AppTab extends React.Component {
         
         this.fetchAndLoadAddressList();
         this.fetchAndLoadOrderList();
+        this.fetchAndLoadCart();
 
       } else {
         user.uid = '';
         user.addressList = [];
         user.orderList = [];
+        user.cart.FoodList = [];
         user.defaultAddressId = -1;
       }
     });
@@ -102,7 +104,7 @@ class AppTab extends React.Component {
     snapshot.val().forEach((order) => {
       const newFoodList = [];
       order.cart.FoodList.forEach((item, index) => {
-        const { id, title, poster, price, weight, type, ingredients, placeId } = item.food
+        const { id, title, poster, price, weight, type, ingredients, placeId } = item.food;
         const newFood = new Food(id, title, poster, price, weight, type, ingredients, placeId);
         newFoodList.push({food: newFood, amount: item.amount});
       });
@@ -111,6 +113,32 @@ class AppTab extends React.Component {
       const newOrder = new Order(order.id, order.date, order.status, newAddress, order.deliveryMethod, order.paymentMethod, newCart)
       user.addNewOrder(newOrder);
     });
+  }
+
+  fetchAndLoadCart = () => {
+    user.orderList = [];
+
+    firebase.database().ref(`users/${user.uid}/cart/FoodList`)
+      .once('value', snapshot => {
+        if (snapshot.val()) {
+          this.loadUsersCart(snapshot);
+        }
+      });
+  }
+
+  loadUsersCart = (snapshot) => {
+    const fetchedData = snapshot.val();
+
+    const newFoodList = [];
+    Object.keys(fetchedData).forEach((key) => {
+      const { id, title, poster, price, weight, type, ingredients, placeId } = fetchedData[key].food;
+      const newFood = new Food(id, title, poster, price, weight, type, ingredients, placeId);
+      newFoodList.push({ food: newFood, amount: fetchedData[key].amount });
+    });
+
+    const newCart = new Cart(newFoodList);
+
+    user.cart = newCart;
   }
 
   changeBadgeText = () => {
