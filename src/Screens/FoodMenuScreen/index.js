@@ -75,7 +75,7 @@ export default class DynamicListExample extends Component {
       <Container>
         <Header
           searchBar rounded
-          style={{ height: 70, justifyContent: 'flex-start', alignItems: 'center', paddingTop: 25, backgroundColor: '#F5A623' }}
+          style={{ height: 70, justifyContent: 'flex-start', alignItems: 'center', paddingTop: 25, backgroundColor: '#E3671F' }}
         >
             <TouchableOpacity
               onPress={this.props.navigation.openDrawer}
@@ -139,12 +139,12 @@ export default class DynamicListExample extends Component {
             !this.state.isSearching ?
             <Footer>
               <FooterTab
-                tabActiveBgColor = "#E79A00"
-                style={{backgroundColor: "#FFAA00"}}
+                tabActiveBgColor = "#FF8B49"
+                style={{backgroundColor: "#E3671F"}}
               >
                 <Button
                   onPress={this.changeActiveTab.bind(this, 'burger')}
-                  style={{backgroundColor: this.state.activeTab === 'burger' ? "#CD8800" : "#FFAA00"}}
+                  style={{backgroundColor: this.state.activeTab === 'burger' ? "#FF8B49" : "#E3671F"}}
                 >
                   <Image
                     source={require('../../Img/icon-burger.png')}
@@ -157,7 +157,7 @@ export default class DynamicListExample extends Component {
                 </Button>
                 <Button
                   onPress={this.changeActiveTab.bind(this, 'pizza')}
-                  style={{backgroundColor: this.state.activeTab === 'pizza' ? "#CD8800" : "#FFAA00"}}
+                  style={{backgroundColor: this.state.activeTab === 'pizza' ? "#FF8B49" : "#E3671F"}}
                 >
                   <Image
                     source={require('../../Img/icon-pizza.png')}
@@ -170,7 +170,7 @@ export default class DynamicListExample extends Component {
                 </Button>
                 <Button
                   onPress={this.changeActiveTab.bind(this, 'drink')}
-                  style={{backgroundColor: this.state.activeTab === 'drink' ? "#CD8800" : "#FFAA00"}}
+                  style={{backgroundColor: this.state.activeTab === 'drink' ? "#FF8B49" : "#E3671F"}}
                 >
                   <Image
                     source={require('../../Img/icon-coke.png')}
@@ -183,7 +183,7 @@ export default class DynamicListExample extends Component {
                 </Button>
                 <Button
                   onPress={this.changeActiveTab.bind(this, 'other')}
-                  style={{backgroundColor: this.state.activeTab === 'other' ? "#CD8800" : "#FFAA00"}}
+                  style={{backgroundColor: this.state.activeTab === 'other' ? "#FF8B49" : "#E3671F"}}
                 >
                   <Image
                     source={require('../../Img/icon-hotdog.png')}

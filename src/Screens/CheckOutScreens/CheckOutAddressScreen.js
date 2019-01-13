@@ -120,7 +120,7 @@ export default class CheckOutAddressScreen extends Component {
           </ScrollView>
           <Button
             full
-            style={{ height: 50, elevation: 6, backgroundColor: '#F5A623' }}
+            style={{ height: 50, elevation: 6, backgroundColor: '#EE7B37' }}
             onPress={() => this.addressCheckOutPressed()}
           >
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>

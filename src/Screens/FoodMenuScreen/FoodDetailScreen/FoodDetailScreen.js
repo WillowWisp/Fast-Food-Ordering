@@ -122,7 +122,7 @@ export default class FoodDetail extends Component {
             <Button
               block
               warning
-              style={{borderRadius: 10}}
+              style={{borderRadius: 10, backgroundColor: '#EE7B37'}}
               disabled={!this.state.buttonClickable}
               onPress={() => {
                 user.cart.addFoodToFirebase(foodClass, this.state.amount);
