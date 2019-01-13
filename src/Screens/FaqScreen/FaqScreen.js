@@ -26,8 +26,7 @@ class FaqScreen extends React.Component {
     return (
       <StyleProvider style={getTheme(customizedTheme)}>
         <Container>
-          <StatusBar hidden />
-          <Header>
+          <Header style={{ height: 70, }}>
             <Left>
               <Button transparent onPress={this.props.navigation.openDrawer}>
                 <Icon name='menu' />
@@ -42,7 +41,7 @@ class FaqScreen extends React.Component {
           <Content padder>
             <Accordion
               dataArray={dataArray}
-              headerStyle={{backgroundColor: '#E3671F'}}
+              headerStyle={{backgroundColor: '#E3671F', color: 'white'}}
               contentStyle={{backgroundColor: '#fca383'}}
               expanded={0}
             />
