@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground } from 'react-native';
+import { ImageBackground, View } from 'react-native';
 import firebase from 'firebase';
 import { Container, Content, Text, List, ListItem, Left, Icon, Body } from 'native-base';
 
@@ -61,7 +61,7 @@ class SideBar extends React.Component {
   componentWillMount() {
     firebase.auth().onAuthStateChanged((currentUser) => {
       this.setState({ currentUser: currentUser });
-      
+
       this.checkLoggedInState();
    });
 
@@ -138,6 +138,7 @@ class SideBar extends React.Component {
             dataArray={this.state.routes}
             renderRow={(data) => this.renderRowItem(data)}
           />
+          <Text style={{ alignSelf: 'center', fontSize: 18, marginTop: 50, color: '#888888' }}>{user.email}</Text>
         </Content>
       </Container>
   );

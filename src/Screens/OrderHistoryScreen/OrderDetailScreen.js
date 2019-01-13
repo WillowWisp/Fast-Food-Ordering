@@ -34,7 +34,7 @@ export default class OrderDetailScreen extends Component {
               <View style={styles.card}>
                 <View style={styles.line}/>
                 <View style={styles.cardTitle}>
-                  <Text style={styles.titleText}>Mã đơn hàng: {user.uid === '' ? 'guess' : user.uid}{id}</Text>
+                  <Text style={styles.titleText}>Mã đơn hàng: {id}{user.uid === '' ? 'guess' : user.uid.slice(0, 10)}</Text>
                 </View>
                 <View style={styles.line}/>
                 <View style={styles.cardContent}>

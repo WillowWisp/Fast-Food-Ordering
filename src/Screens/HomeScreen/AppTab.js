@@ -41,7 +41,10 @@ class AppTab extends React.Component {
     firebase.auth().onAuthStateChanged(currentUser => {
       if (currentUser) {
         user.uid = currentUser.uid;
-        
+
+        //if anonymous set email = 'Guess'
+        user.email = currentUser.email;
+
         this.fetchAndLoadAddressList();
         this.fetchAndLoadOrderList();
         this.fetchAndLoadCart();
@@ -55,7 +58,7 @@ class AppTab extends React.Component {
       }
     });
 
-    
+
     firebase.database().ref('places/')
       .on('value', (snapshot) => {
         const fetchedPlaces = snapshot.val();
@@ -73,7 +76,7 @@ class AppTab extends React.Component {
           this.loadUsersAddressList(snapshot);
         }
       });
-    
+
     firebase.database().ref(`users/${user.uid}/defaultAddressId`)
       .on('value', snapshot => {
         if (snapshot.val() !== undefined) {

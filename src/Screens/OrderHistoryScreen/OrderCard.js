@@ -17,7 +17,7 @@ export default class OrderCard extends Component {
           >{order.cart.getShortenedAllFood()}</Text>
         </View>
         <View style={styles.phoneNumberAndAddressContainer}>
-          <Text style={{ marginTop: 5, color: '#888888' }}>Mã đơn hàng: {user.uid === '' ? 'guess' : user.uid}{order.id}</Text>
+          <Text style={{ marginTop: 5, color: '#888888' }}>Mã đơn hàng: {order.id}{user.uid === '' ? 'guess' : user.uid.slice(0, 10)}</Text>
           <Text style={{ color: '#888888' }}>Ngày đặt hàng: {order.date}</Text>
           <Text style={{ color: '#888888' }}>Trạng thái: {order.status}</Text>
         </View>
