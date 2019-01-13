@@ -112,7 +112,7 @@ class SideBar extends React.Component {
           <Icon style={{ fontSize: 23 }} name={data.iconName} type={data.iconType} />
         </Left>
         <Body>
-          <Text>{data.displayName}</Text>
+          <Text style={{fontFamily: 'VarelaRound'}}>{data.displayName}</Text>
         </Body>
       </ListItem>
     );
