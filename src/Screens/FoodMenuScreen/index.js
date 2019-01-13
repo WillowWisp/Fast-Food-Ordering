@@ -19,6 +19,9 @@ export default class DynamicListExample extends Component {
   }
 
   componentWillMount() {
+    const activeTab = this.props.navigation.getParam('activeTab');
+    this.setState({activeTab});
+    
     firebase.database().ref('foodMenu/foodData')
       .on('value', snapshot => {
         this.setState({ foodData: snapshot.val() });
@@ -63,16 +66,6 @@ export default class DynamicListExample extends Component {
     if (input === "" || input === undefined)
       return;
     this.setState({ isSearching: true, searchResult: input });
-  }
-
-  componentWillMount() {
-    const activeTab = this.props.navigation.getParam('activeTab');
-    this.setState({activeTab});
-    
-    firebase.database().ref('foodMenu/foodData')
-      .on('value', snapshot => {
-        this.setState({ foodData: snapshot.val() });
-      });
   }
 
   render() {

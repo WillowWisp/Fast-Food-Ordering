@@ -51,19 +51,25 @@ class AppTab extends React.Component {
         
         firebase.database().ref(`users/${user.uid}/defaultAddressId`)
           .on('value', snapshot => {
-            if (snapshot.val()) {
+            if (snapshot.val() !== undefined) {
               user.defaultAddressId = snapshot.val();
               console.log(user.defaultAddressId);
             }
-            console.log(snapshot.val());
+            //console.log(snapshot.val());
           });
       } else {
         user.uid = '';
         user.addressList = [];
         user.defaultAddressId = -1;
       }
-      
     });
+
+    
+    firebase.database().ref('places/')
+      .on('value', (snapshot) => {
+        const fetchedPlaces = snapshot.val();
+        globalPlaces = fetchedPlaces;
+      });
   }
 
   loadUsersAddressList = (snapshot) => {
@@ -71,11 +77,6 @@ class AppTab extends React.Component {
       const fetchedAddress = {...snapshot.val()[key]};
       user.addNewAddress(new Address(fetchedAddress.name, fetchedAddress.phoneNumber, fetchedAddress.city, fetchedAddress.detailAddress, key));
     });
-    firebase.database().ref('places/')
-      .on('value', (snapshot) => {
-        const fetchedPlaces = snapshot.val();
-        globalPlaces = fetchedPlaces;
-      });
   }
 
   changeBadgeText = () => {
