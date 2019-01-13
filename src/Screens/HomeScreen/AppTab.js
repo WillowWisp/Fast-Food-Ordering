@@ -165,7 +165,7 @@ class AppTab extends React.Component {
               </Button>
             </Left>
             <Body>
-              <Title>Trang chủ</Title>
+              <Title style={{fontFamily: 'VarelaRound'}}>Trang chủ</Title>
             </Body>
             <Right>
               <TouchableOpacity
@@ -269,7 +269,8 @@ const styles = StyleSheet.create({
     color: 'white',
     position: 'absolute',
     fontSize: 30,
-    fontWeight: 'bold'
+    //fontWeight: 'bold',
+    fontFamily: 'VarelaRound'
   }
 })
 

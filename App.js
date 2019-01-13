@@ -18,6 +18,7 @@ class App extends React.Component {
     await Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+      'VarelaRound': require('./assets/fonts/VarelaRound-Regular.ttf'),
     });
     firebase.initializeApp({
       apiKey: "AIzaSyA-QfZKZnvJ9av1yqXPMZrlgYK94Hx-FmY",

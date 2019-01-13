@@ -145,7 +145,7 @@ export default class EditAddressScreen extends Component {
           </View>
           <Button
             full
-            style={{ height: 50, elevation: 6, backgroundColor: '#F5A623' }}
+            style={{ height: 50, elevation: 6, backgroundColor: '#EE7B37' }}
             onPress={() => this.updateAddress()}
           >
             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>

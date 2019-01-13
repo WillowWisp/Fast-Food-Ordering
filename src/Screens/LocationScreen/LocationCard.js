@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#e87330"
+    color: "#e87330",
   },
   address: {
     color: "#444",

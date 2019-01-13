@@ -42,8 +42,8 @@ class FaqScreen extends React.Component {
           <Content padder>
             <Accordion
               dataArray={dataArray}
-              headerStyle={{backgroundColor: '#ffbd68'}}
-              contentStyle={{backgroundColor: '#ffe5c6'}}
+              headerStyle={{backgroundColor: '#E3671F'}}
+              contentStyle={{backgroundColor: '#fca383'}}
               expanded={0}
             />
           </Content>
