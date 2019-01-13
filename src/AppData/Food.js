@@ -1,5 +1,5 @@
 export default class Food {
-  constructor(id, title, poster, price, weight, type, ingredients = null) {
+  constructor(id, title, poster, price, weight, type, ingredients = null, placeId) {
     this.id = id;
     this.title = title;
     this.poster = poster;
@@ -7,6 +7,7 @@ export default class Food {
     this.weight = weight;
     this.type = type;
     this.ingredients = ingredients;
+    this.placeId = placeId === undefined ? 0 : placeId;
   }
 
   getIntPrice() {

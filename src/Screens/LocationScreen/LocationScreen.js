@@ -48,16 +48,16 @@ export default class LocationScreen extends React.Component {
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     },
-    places: [],
+    places: globalPlaces,
   }
 
-  componentWillMount() {
-    firebase.database().ref('places/')
-      .on('value', (snapshot) => {
-        const fetchedPlaces = snapshot.val();
-        this.setState({ places: fetchedPlaces });
-      });
-  }
+  // componentWillMount() {
+  //   firebase.database().ref('places/')
+  //     .on('value', (snapshot) => {
+  //       const fetchedPlaces = snapshot.val();
+  //       this.setState({ places: fetchedPlaces });
+  //     });
+  // }
 
   _renderMarker = () => {
     return this.state.places.map(place => (
@@ -76,7 +76,7 @@ export default class LocationScreen extends React.Component {
         place={place}
         key={place.id}
         onGotoPress={() => {
-          this.setState({ 
+          this.setState({
             region: {
               latitude: place.lat,
               longitude: place.long,
@@ -124,7 +124,7 @@ export default class LocationScreen extends React.Component {
                 {this._renderLocationCards()}
               </ScrollView>
             </View>
-            
+
           </View>
         </Container>
       </StyleProvider>

@@ -1,6 +1,7 @@
 import User from './src/AppData/User'
 
 global.user = new User();
+global.globalPlaces = [];
 global.helper = {
   convertIntToVND: (intNum) => {
 
