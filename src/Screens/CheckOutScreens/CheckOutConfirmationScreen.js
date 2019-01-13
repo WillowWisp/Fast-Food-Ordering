@@ -38,14 +38,16 @@ export default class CheckOutConfirmationScreen extends Component {
       cart: cart,
     });
 
-    Toast.show({
-      text: 'Đặt thức ăn thành công!',
-      buttonText: 'Okay',
-      type: "success",
-    })
+    this.setState({ isModalVisible: true });
 
-    console.log(id);
-    this.props.navigation.navigate('HomeScreen');
+    // Toast.show({
+    //   text: 'Đặt thức ăn thành công!',
+    //   buttonText: 'Okay',
+    //   type: "success",
+    // })
+
+    // console.log(id);
+    // this.props.navigation.navigate('HomeScreen');
   }
 
   getIdAndCreateOrder() {
@@ -82,7 +84,10 @@ export default class CheckOutConfirmationScreen extends Component {
             <View style={{ marginVertical: 20 }}>
               <Button
                 danger
-                onPress={() => this.setState({isModalVisible: false})}
+                onPress={() => {
+                  this.setState({isModalVisible: false});
+                  this.props.navigation.navigate('HomeScreen');
+                }}
               >
                 <Text style={{fontSize: 18, fontWeight: '600', color: 'white'}}>ĐÓNG</Text>
               </Button>
