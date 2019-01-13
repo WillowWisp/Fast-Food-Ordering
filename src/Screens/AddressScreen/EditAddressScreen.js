@@ -44,6 +44,10 @@ export default class EditAddressScreen extends Component {
 
     const id = this.props.navigation.getParam('id');
 
+    const firebaseID = user.addressList[id].firebaseID;
+    console.log(firebaseID);
+    user.updateAddressOnFirebase(firebaseID, fullName, phoneNumber, city, detailAddress);
+
     user.editAddress(id, fullName, phoneNumber, city, detailAddress);
 
     if (this.state.setDefaultChecked) {

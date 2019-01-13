@@ -38,9 +38,12 @@ export default class NewAddressScreen extends Component {
       return;
     }
 
-    if (user.addNewAddress(new Address(fullName, phoneNumber, city, detailAddress)) === false) {
-      return;
-    }
+    const newAddress = new Address(fullName, phoneNumber, city, detailAddress);
+
+    const firebaseID = user.pushAddressToFirebase(newAddress);
+    console.log(firebaseID);
+    newAddress.firebaseID = firebaseID;
+    user.addNewAddress(newAddress);
     
     if (this.state.setDefaultChecked) {
       user.changeDefautAddress(user.addressList.length - 1);
