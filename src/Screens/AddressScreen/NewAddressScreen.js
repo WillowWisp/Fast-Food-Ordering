@@ -38,7 +38,10 @@ export default class NewAddressScreen extends Component {
       return;
     }
 
-    user.addNewAddress(new Address(fullName, phoneNumber, city, detailAddress));
+    if (user.addNewAddress(new Address(fullName, phoneNumber, city, detailAddress)) === false) {
+      return;
+    }
+    
     if (this.state.setDefaultChecked) {
       user.changeDefautAddress(user.addressList.length - 1);
     }

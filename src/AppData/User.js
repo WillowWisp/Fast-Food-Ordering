@@ -1,9 +1,11 @@
 import Cart from './Cart'
 import Address from './Address'
 
+import {Toast} from 'native-base';
+
 export default class User {
   constructor() {
-    this.profilePicture = '';
+    this.uid = '';
     this.userName = '';
     this.email = '';
     this.orderList = [];
@@ -13,10 +15,21 @@ export default class User {
   }
 
   addNewAddress(address) {
+    if (user.uid === '') {
+      Toast.show({
+        text: "Chức năng này cần đăng nhập.",
+        buttonText: "Okay",
+      });
+
+      return false;
+    }
+
     this.addressList.push(address);
     if (this.addressList.length === 1) {
       this.defaultAddressId = 0;
     }
+
+    return true;
   }
 
   addNewOrder(order) {

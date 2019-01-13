@@ -1,4 +1,5 @@
 import Food from './Food';
+import { Toast } from 'native-base';
 
 export default class Cart {
 constructor(FoodList) {
@@ -11,6 +12,14 @@ constructor(FoodList) {
   }
 
   addFood(food, amount) {
+    if (user.uid === '') {
+      Toast.show({
+        text: "Chức năng này cần đăng nhập.",
+        buttonText: "Okay",
+      });
+      return;
+    }
+
     for (var i = 0; i < this.FoodList.length; i++) {
       if (this.FoodList[i].food.id === food.id) {
         this.FoodList[i].amount += amount;
@@ -18,6 +27,12 @@ constructor(FoodList) {
       }
     }
     this.FoodList.push({food, amount});
+
+    Toast.show({
+      text: "Đã thêm hàng vào giỏ!",
+      buttonText: "Okay",
+      type: "success",
+    });
   }
 
   removeFood(id) {

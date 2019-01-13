@@ -250,11 +250,11 @@ export default class CustomBurgerScreen extends React.Component {
                 <View style={{flex: 1}}>
                   <Button disabled={!this.state.isReady} light={!this.state.isReady} small success rounded onPress={() => {
                     this.onAddPress();
-                    Toast.show({
-                      text: "Đã thêm Burger vào giỏ hàng.",
-                      buttonText: "Okay",
-                      type: "success",
-                    });
+                    // Toast.show({
+                    //   text: "Đã thêm Burger vào giỏ hàng.",
+                    //   buttonText: "Okay",
+                    //   type: "success",
+                    // });
                   }}>
                     <Icon name='md-cart' />
                     <Text>Thêm</Text>
