@@ -40,9 +40,14 @@ class AppTab extends React.Component {
       if (currentUser) {
         user.uid = currentUser.uid;
       } else {
-        user.uid = '';
+        user.uid = 'yfg8f6df868';
       }
     });
+    firebase.database().ref('places/')
+      .on('value', (snapshot) => {
+        const fetchedPlaces = snapshot.val();
+        globalPlaces = fetchedPlaces;
+      });
   }
 
   changeBadgeText = () => {

@@ -200,7 +200,7 @@ export default class CheckOutConfirmationScreen extends Component {
                       </View>
                       <View style={styles.cartItemInfoContainer}>
                         <Text style={styles.cartTitle}>{cartItem.food.title}</Text>
-                        <Text style={styles.cartSubtext}>{cartItem.food.getFormalizedType()}</Text>
+                        <Text style={styles.cartSubtext}>{globalPlaces[cartItem.food.placeId].title}</Text>
                         <View style={styles.priceContainer}>
                           <Text style={styles.price}>{cartItem.food.price}</Text>
                           <Text style={styles.amount}>x {cartItem.amount}</Text>
