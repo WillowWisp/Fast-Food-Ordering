@@ -3,7 +3,7 @@ import firebase from 'firebase';
 import { Container, Header, Title, Content, Button, Left, Right, Body, Icon, Text, StyleProvider, Toast, Badge } from 'native-base';
 import getTheme from '../../../native-base-theme/components';
 import customizedTheme from '../../../native-base-theme/variables/variables';
-import { View, StyleSheet, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, ScrollView, ImageBackground, AsyncStorage } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import Address from '../../AppData/Address'
 import Food from '../../AppData/Food'
@@ -37,23 +37,82 @@ class AppTab extends React.Component {
 
   }
 
+  removeData = async (key) => {
+    try {
+      await AsyncStorage.removeItem(key);
+    } catch (error) {
+      // Error saving data
+      console.log('removing error');
+    }
+  }
+
+  storeData = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (error) {
+      // Error saving data
+      console.log('saving error');
+    }
+  }
+
+  retrieveData = async (key) => {
+    //const key = 'test';
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value !== null) {
+        //console.log(value);
+        //test = value;
+        return value;
+      }
+      else {
+        //console.log('else');
+        //this._storeData(key);
+        return '';
+      }
+     } catch (error) {
+       // Error retrieving data
+       //_storeData(key);
+       console.log('retrieving error');
+     }
+  }
+
   componentWillMount() {
+    //this.removeData('uid');
+
+    /*
+    this.retrieveData('uid').then((value) => {
+      if (value === '') {
+        this.storeData('uid', 'guessUid')
+      }
+      else {
+        console.log(value);
+      }
+    });*/
+
     firebase.auth().onAuthStateChanged(currentUser => {
       if (currentUser) {
         user.uid = currentUser.uid;
-        
+        user.isAnonymous = currentUser.isAnonymous;
         this.fetchAndLoadAddressList();
         this.fetchAndLoadOrderList();
 
       } else {
+        /*
         user.uid = '';
         user.addressList = [];
         user.orderList = [];
         user.defaultAddressId = -1;
+        */
+        firebase.auth().signInAnonymously().catch((error) => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+        });
       }
     });
 
-    
+
     firebase.database().ref('places/')
       .on('value', (snapshot) => {
         const fetchedPlaces = snapshot.val();
@@ -71,7 +130,7 @@ class AppTab extends React.Component {
           this.loadUsersAddressList(snapshot);
         }
       });
-    
+
     firebase.database().ref(`users/${user.uid}/defaultAddressId`)
       .on('value', snapshot => {
         if (snapshot.val() !== undefined) {
@@ -115,6 +174,12 @@ class AppTab extends React.Component {
 
   changeBadgeText = () => {
     const num = user.cart.FoodList.length;
+    // if (test === '') {
+    //   console.log('empty');
+    // }
+    // else {
+    //console.log(test);
+    // }
     if (num > 9) {
       this.setState({ badgeText: "*" });
     }

@@ -13,6 +13,7 @@ export default class User {
     this.addressList = [];
     this.cart = new Cart();
     this.defaultAddressId = -1;
+    this.isAnonymous = true;
   }
 
   pushAddressToFirebase(address) {

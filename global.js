@@ -1,5 +1,6 @@
 import User from './src/AppData/User'
 
+global.test = '.';
 global.user = new User();
 global.globalPlaces = [];
 global.helper = {
