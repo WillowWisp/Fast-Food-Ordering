@@ -31,7 +31,8 @@ export default class CheckOutAddressScreen extends Component {
   }
 
   addressCheckOutPressed() {
-    if (this.state.addressList.length === 0) {
+    //console.log(this.state.choosenRadioButtonId);
+    if (this.state.addressList.length === 0 || this.state.choosenRadioButtonId < 0) {
       Toast.show({
         text: 'Vui lòng cung cấp địa chỉ',
         buttonText: 'Okay',
