@@ -17,9 +17,9 @@ export default class OrderHistoryScreen extends Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.goBack()}
+              onPress={this.props.navigation.openDrawer}
             >
-              <Icon name='arrow-back' />
+              <Icon name='menu' />
             </Button>
           </Left>
           <Body>
