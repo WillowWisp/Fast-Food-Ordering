@@ -50,11 +50,24 @@ class AppTab extends React.Component {
         this.fetchAndLoadCart();
 
       } else {
+          
         user.uid = '';
         user.addressList = [];
         user.orderList = [];
-        user.cart.FoodList = [];
         user.defaultAddressId = -1;
+        user.cart.FoodList = [];
+          
+        firebase.auth().signInAnonymously().
+          then(() => {
+            user.email = 'Guest';
+            user.isAnonymous = true;
+          }).
+          catch((error) => {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+          });
       }
     });
 
@@ -119,7 +132,7 @@ class AppTab extends React.Component {
   }
 
   fetchAndLoadCart = () => {
-    user.orderList = [];
+    user.cart.FoodList = [];
 
     firebase.database().ref(`users/${user.uid}/cart/FoodList`)
       .once('value', snapshot => {

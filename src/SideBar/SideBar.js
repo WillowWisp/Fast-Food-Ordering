@@ -70,7 +70,8 @@ class SideBar extends React.Component {
   checkLoggedInState = () => {
     const newRoutes = [...this.state.routes];
 
-    if (!this.state.currentUser) {
+    console.log(this.state.currentUser);
+    if (!this.state.currentUser || this.state.currentUser.isAnonymous) {
       newRoutes[newRoutes.length - 1] = {
         name: "SignIn",
         iconName: "login",
@@ -118,6 +119,17 @@ class SideBar extends React.Component {
     );
   }
 
+  _renderName = () => {
+    if (this.state.currentUser) {
+      if (this.state.currentUser.email) {
+        return this.state.currentUser.email;
+      }
+      return 'Guest';
+    }
+
+    return 'None';
+  }
+
   render() {
     return (
       <Container>
@@ -138,7 +150,7 @@ class SideBar extends React.Component {
             dataArray={this.state.routes}
             renderRow={(data) => this.renderRowItem(data)}
           />
-          <Text style={{ alignSelf: 'center', fontSize: 18, marginTop: 50, color: '#888888' }}>{user.email}</Text>
+          <Text style={{ alignSelf: 'center', fontSize: 18, marginTop: 50, color: '#888888' }}>{this._renderName()}</Text>
         </Content>
       </Container>
   );
