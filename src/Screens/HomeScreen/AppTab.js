@@ -39,9 +39,37 @@ class AppTab extends React.Component {
     firebase.auth().onAuthStateChanged(currentUser => {
       if (currentUser) {
         user.uid = currentUser.uid;
+        
+        user.addressList = [];
+
+        firebase.database().ref(`users/${user.uid}/addressList`)
+          .once('value', snapshot => {
+            if (snapshot.val()) {
+              this.loadUsersAddressList(snapshot);
+            }
+          });
+        
+        firebase.database().ref(`users/${user.uid}/defaultAddressId`)
+          .on('value', snapshot => {
+            if (snapshot.val()) {
+              user.defaultAddressId = snapshot.val();
+              console.log(user.defaultAddressId);
+            }
+            console.log(snapshot.val());
+          });
       } else {
         user.uid = '';
+        user.addressList = [];
+        user.defaultAddressId = -1;
       }
+      
+    });
+  }
+
+  loadUsersAddressList = (snapshot) => {
+    Object.keys(snapshot.val()).map((key) => {
+      const fetchedAddress = {...snapshot.val()[key]};
+      user.addNewAddress(new Address(fetchedAddress.name, fetchedAddress.phoneNumber, fetchedAddress.city, fetchedAddress.detailAddress, key));
     });
   }
 

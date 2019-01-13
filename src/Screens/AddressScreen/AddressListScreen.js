@@ -11,6 +11,9 @@ export default class AdressListScreen extends Component {
   }
 
   removeAddress = (id) => {
+    const firebaseID = user.addressList[id].firebaseID;
+    user.removeAddressFromFirebase(firebaseID);
+
     user.removeAddress(id);
     this.setState({ addressList: user.addressList,
                     choosenRadioButtonId: user.defaultAddressId,

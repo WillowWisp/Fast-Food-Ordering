@@ -43,7 +43,7 @@ class FaqScreen extends React.Component {
               contentStyle={{backgroundColor: '#ffe5c6'}}
               expanded={0}
             />
-            <Button onPress={() => console.log(user.uid)}>
+            <Button onPress={() => {console.log(user.addressList)}}>
               <Text>Click</Text>
             </Button>
           </Content>
