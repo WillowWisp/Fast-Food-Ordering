@@ -142,6 +142,7 @@ class AppTab extends React.Component {
     const newCart = new Cart(newFoodList);
 
     user.cart = newCart;
+    this.changeBadgeText();
   }
 
   changeBadgeText = () => {
